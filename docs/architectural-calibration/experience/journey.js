@@ -5,18 +5,45 @@ let step = 0;
 let markers = [];
 let ritualPhase = null;
 let bellPhase = null;
+let endingFocusTimer;
+const journeySurfaces = [...document.querySelectorAll('body > header, body > main, body > footer')];
+
+function showEnding() {
+  sessionStorage.setItem('manmo-previsit-ritual-complete', 'true');
+  journeySurfaces.forEach(surface => { surface.inert = true; });
+  document.body.classList.add('has-previsit-ending');
+  $('previsit-ending').hidden = false;
+  const delay = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1500;
+  endingFocusTimer = setTimeout(() => $('ending-title').focus({preventScroll: true}), delay);
+}
+
+function replayJourney() {
+  clearTimeout(endingFocusTimer);
+  $('previsit-ending').hidden = true;
+  document.body.classList.remove('has-previsit-ending');
+  journeySurfaces.forEach(surface => { surface.inert = false; });
+  step = 0;
+  ritualPhase = null;
+  bellPhase = null;
+  show();
+  $('next').focus({preventScroll: true});
+}
+
 
 function copy(title, prompt, progress) {
   $('title').textContent = title;
   $('prompt').textContent = prompt;
-  $('progress').textContent = progress;
+  $('progress').textContent = progress.replace(/^\d+\s*\/\s*/, '');
   $('feedback').textContent = '';
   $('choices').replaceChildren();
   $('next').hidden = true;
+  document.querySelector('.guide').scrollTop = 0;
+  $('title').focus({preventScroll: true});
 }
 function action(label, fn) {
   $('next').hidden = false;
   $('next').textContent = label;
+  $('next').setAttribute('aria-label', label);
   $('next').onclick = fn;
   $('next').disabled = false;
 }
@@ -37,7 +64,10 @@ function marker(label, point, fn) {
   const button = document.createElement('button');
   button.className = 'hotspot';
   button.setAttribute('aria-label',label);
-  button.textContent = label;
+  const dot = document.createElement('span'); dot.className = 'hotspot-dot'; dot.setAttribute('aria-hidden', 'true');
+  const line = document.createElement('span'); line.className = 'hotspot-line'; line.setAttribute('aria-hidden', 'true');
+  const text = document.createElement('span'); text.textContent = label;
+  button.append(dot, line, text);
   button.onclick = fn;
   $('hotspots').append(button);
   markers.push({button, point});
@@ -58,7 +88,7 @@ function show() {
   $('restart').hidden = step === 0;
 
   if (step === 0) {
-    copy('入廟之前，先整一整衣著。', '這是一段到訪前的文化禮儀演練。先整理衣著，然後走近廟門；建築與文物留待現場觀察。', '到訪前 · 文武廟禮儀');
+    copy('入廟之前，先整一整衣著。', '整理衣著，慢慢走近廟門。先練習怎樣到訪，建築與文物留待現場觀察。', '到訪前 · 文武廟禮儀');
     look('entry');
     $('caption').textContent = '由廟門開始，一步一步走進去。';
     action('整理好衣著，走到廟門', advance);
@@ -121,23 +151,14 @@ function show() {
     showThreshold(true);
     $('caption').textContent = '左右腳次序屬民俗示範，不作現場硬性規則。';
     options([
-      ['右腳先跨出，避開門檻', () => {
-        $('choices').replaceChildren();
-        $('feedback').textContent = '完成示範。現場以安全、無障礙需要及廟方安排為先。';
-        action('完成演練', advance);
-      }],
+      ['右腳先跨出，避開門檻', advance],
       ['踩着門檻離開', () => {
         $('feedback').textContent = '試抬腳跨過門檻；請選擇避開門檻的做法。';
       }]
     ]);
   }
   if (step === 6) {
-    sessionStorage.setItem('manmo-previsit-ritual-complete','true');
-    $('back').hidden=true;$('repeat').hidden=true;
-    copy('入廟前，已經練過一遍。', '整理衣著、跨檻、認識鐘鼓、禮讓；若自願參拜，再按現場安排處理香燭、稟願及寶牒。到現場才開始觀察建築與文物。', '演練完成');
-    look('entry');
-    $('caption').textContent = '不輸入個人資料；不自行點火或觸碰法器。';
-    action('重新演練', () => { step = 0; show(); });
+    showEnding();
   }
 }
 function showBell() {
@@ -232,7 +253,8 @@ $('back').onclick = () => {
   }
 };
 $('repeat').onclick = () => look(step === 1 || step === 5 ? 'threshold' : step === 2 ? 'bell' : step === 4 && ritualPhase === 'wish' ? 'deities' : step === 3 || step === 4 ? 'courtesy' : 'entry');
-$('restart').onclick = () => { step = 0; ritualPhase = null; bellPhase = null; show(); };
+$('restart').onclick = replayJourney;
+$('ending-replay').onclick = replayJourney;
 $('about').onclick = () => $('sources').showModal();
 $('close-about').onclick = () => $('sources').close();
 onFrame(() => {
@@ -240,7 +262,8 @@ onFrame(() => {
     const p = project(point);
     button.style.left = `${p.x}px`;
     button.style.top = `${p.y}px`;
-    button.style.visibility = p.visible ? 'visible' : 'hidden';
+    button.classList.toggle('is-left', p.x > window.innerWidth * .74);
+    button.style.visibility = p.visible && p.settled ? 'visible' : 'hidden';
   }
 });
 window.addEventListener('temple-ready', show, {once: true});

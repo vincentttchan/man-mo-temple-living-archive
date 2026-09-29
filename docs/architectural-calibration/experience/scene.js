@@ -12,14 +12,14 @@ import * as THREE from 'three';
 import {mapUV,makeAtmosphere} from '../materials/materials.js?v=3';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 // Dimensionless schematic units, NOT metres. Plan trace uses the 617 × 896 TWGH sketch.
-export const scene=new THREE.Scene();scene.background=new THREE.Color('#242825');
+export const scene=new THREE.Scene();scene.background=new THREE.Color('#15110e');
 const host=document.querySelector('#canvas');let renderer;
 try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){document.querySelector('#error').hidden=false;throw e;}
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;host.append(renderer.domElement);
 const camera=new THREE.PerspectiveCamera(38,1,.1,100);const orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;orbit.maxPolarAngle=Math.PI*.49;orbit.minDistance=7;orbit.maxDistance=42;
-const ambient=new THREE.HemisphereLight(0xd6e5ef,0x29241e,.24);scene.add(ambient);
+const ambient=new THREE.HemisphereLight(0xecdcc8,0x292019,.30);scene.add(ambient);
 const sun=new THREE.DirectionalLight(0xffe8c7,2.5);sun.position.set(-7,16,5);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.radius=3;Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12});sun.shadow.normalBias=.025;sun.shadow.bias=-.0001;scene.add(sun);
-const entranceFill=new THREE.PointLight(0xc9d9e6,5.5,9,2);entranceFill.position.set(-.6,2.8,4.8);scene.add(entranceFill);
+const entranceFill=new THREE.PointLight(0xffdfb5,6,9,2);entranceFill.position.set(-.6,2.8,4.8);scene.add(entranceFill);
 const warmLights=[];for(const [x,y,z,power] of [[0,3.65,-5.55,7],[-3,2.5,-5.7,5],[3,2.5,-5.7,5],[0,3.6,.7,2.8]]){const light=new THREE.PointLight(0xffc894,power,9,2);light.position.set(x,y,z);scene.add(light);warmLights.push(light);}
 const pmrem=new THREE.PMREMGenerator(renderer);const envRoom=new RoomEnvironment();const envTarget=pmrem.fromScene(envRoom,.04);scene.environment=envTarget.texture;scene.environmentIntensity=.10;envRoom.dispose();pmrem.dispose();
 export const mat=makeMaterials();for(const material of Object.values(mat))material.envMap=envTarget.texture;mat.roof.side=THREE.FrontSide;mat.roof.shadowSide=THREE.DoubleSide;const soffit=mat.altar.clone();soffit.side=THREE.BackSide;
@@ -68,7 +68,7 @@ hip(5.35,4.1,.575,3.95,.85,3.25);
 // Rolled roofs on flanking chambers: simple curved barrel surfaces.
 for(const x of [-3.7,3.7]){const verts=[],idx=[];for(let j=0;j<=16;j++){const t=j/16*Math.PI;for(const z of [-1.45,2.7])verts.push([x+1.25*Math.cos(t),3.5+.55*Math.sin(t),z]);if(j<16){let a=j*2;idx.push(a,a+1,a+2,a+1,a+3,a+2);}}surface(verts,idx);}
 // A neutral plinth, not a reconstruction of the street or surrounding buildings.
-export const ground=box(200,.15,200,0,-.55,0,new THREE.MeshStandardMaterial({color:0x262c29,roughness:1}),scene);
+export const ground=box(200,.15,200,0,-.55,0,new THREE.MeshStandardMaterial({color:0x241c15,roughness:1}),scene);
 export const atmosphere=makeAtmosphere(scene);
 const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));const ao=new SSAOPass(scene,camera,640,640,8);ao.kernelRadius=.35;ao.minDistance=.002;ao.maxDistance=.10;composer.addPass(ao);composer.addPass(new OutputPass());const fxaa=new ShaderPass(FXAAShader);composer.addPass(fxaa);
 
@@ -94,8 +94,22 @@ setSituation('none');
 let moving=null,ready=false;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;orbit.enabled=false;orbit.enableDamping=false;
 export function look(name,animate=true){const v=presets[name];moving={start:performance.now(),duration:animate&&!reduced?1600:0,p:camera.position.clone(),t:orbit.target.clone(),toP:new THREE.Vector3(...v.p),toT:new THREE.Vector3(...v.t),fromFov:camera.fov,fov:v.fov};}
 export function explore(on){orbit.enabled=on;orbit.minDistance=.7;orbit.maxDistance=38;}
-export function project(point){const p=new THREE.Vector3(...point).project(camera);return {x:(p.x+1)*host.clientWidth/2,y:(1-p.y)*host.clientHeight/2,visible:p.z<1&&p.z>-1&&Math.abs(p.x)<.92&&Math.abs(p.y)<.84};}
+export function project(point){const p=new THREE.Vector3(...point).project(camera);return {x:(p.x+1)*host.clientWidth/2,y:(1-p.y)*host.clientHeight/2,visible:p.z<1&&p.z>-1&&Math.abs(p.x)<.92&&Math.abs(p.y)<.88,settled:!moving};}
 let frameCallback=()=>{};export function onFrame(fn){frameCallback=fn;}
-new ResizeObserver(()=>{const{width,height}=host.getBoundingClientRect();renderer.setSize(width,height);composer.setSize(width,height);ao.setSize(Math.round(width*.75),Math.round(height*.75));fxaa.material.uniforms.resolution.value.set(1/(width*renderer.getPixelRatio()),1/(height*renderer.getPixelRatio()));camera.aspect=width/height;camera.updateProjectionMatrix();}).observe(host);
+// Frame the existing camera view beside the dialogue while the scene fills the screen.
+const guide=document.querySelector('.guide');
+function frameScene(){
+  const {width,height}=host.getBoundingClientRect();
+  if(!width||!height)return;
+  let x,y,w,h;
+  if(width<=850&&width<height*1.2){
+    const dialogueTop=guide.getBoundingClientRect().top;
+    x=width*.04;y=Math.min(112,height*.15);w=width*.92;h=Math.max(height*.22,dialogueTop-y-14);
+  }else{x=width*.41;y=height*.10;w=width*.56;h=height*.77;}
+  camera.setViewOffset(w,h,-x,-y,width,height);
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(()=>{const{width,height}=host.getBoundingClientRect();if(!width||!height)return;renderer.setSize(width,height);composer.setSize(width,height);ao.setSize(Math.round(width*.75),Math.round(height*.75));fxaa.material.uniforms.resolution.value.set(1/(width*renderer.getPixelRatio()),1/(height*renderer.getPixelRatio()));frameScene();}).observe(host);
+new ResizeObserver(frameScene).observe(guide);
 look('entry',false);
 renderer.setAnimationLoop(time=>{if(moving){const t=moving.duration?Math.min(1,(performance.now()-moving.start)/moving.duration):1,e=t*t*(3-2*t);camera.position.lerpVectors(moving.p,moving.toP,e);orbit.target.lerpVectors(moving.t,moving.toT,e);camera.fov=moving.fromFov+(moving.fov-moving.fromFov)*e;camera.updateProjectionMatrix();if(t===1)moving=null;}orbit.update();atmosphere.update(time);composer.render();frameCallback();if(!ready){ready=true;document.documentElement.dataset.ready='true';document.querySelector('#loading').hidden=true;window.dispatchEvent(new Event('temple-ready'));}});

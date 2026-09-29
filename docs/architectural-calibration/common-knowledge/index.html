@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#231a15">
+  <title>文武廟｜Living Archive</title>
+  <link rel="preload" as="image" href="assets/living-archive/opening/hero.webp" fetchpriority="high">
+  <link rel="stylesheet" href="style.css?v=28">
+  <link rel="stylesheet" href="desk.css?v=19">
+  <link rel="stylesheet" href="faith-full.css?v=44">
+  <link rel="stylesheet" href="plan-full.css?v=20">
+  <link rel="stylesheet" href="opening.css?v=33">
+  <link rel="stylesheet" href="history-h01.css?v=5">
+  <link rel="stylesheet" href="restoration-journey.css?v=12">
+  <link rel="stylesheet" href="map-inquiry.css?v=21">
+  <link rel="stylesheet" href="architecture-study.css?v=15">
+  <link rel="stylesheet" href="photo-inquiry.css?v=15">
+  <link rel="stylesheet" href="room-presentation.css?v=8">
+<link rel="stylesheet" href="threshold-journey.css?v=3">
+</head>
+<body>
+  <main class="experience" id="experience">
+    <section id="restoration-root" class="restoration-journey" data-input="pointer" data-entry-beat="role" data-room-beat="archive" data-scene="hero" data-restoration="faded" aria-label="文武廟 Living Archive">
+      <div class="archive-stage" data-scene="hero">
+        <section class="archive-scene" data-scene="hero" aria-label="文武廟正殿">
+          <img class="archive-art" src="assets/living-archive/opening/hero.webp" alt="" aria-hidden="true" ><img class="archive-art archive-hero-clean" src="assets/living-archive/opening/hero-clean.webp" alt="" aria-hidden="true">
+          <span class="archive-sr-only">一座廟，還有多少故事沒有被看見？你看見了神像、香火與建築。但它留下的故事，藏在哪裡？</span>
+          <button id="restoration-enter" class="archive-hit archive-hit--hero" type="button" aria-label="開始考察"></button>
+        </section>
+        <section class="archive-scene" data-scene="archive-entry" hidden aria-label="走進廟藏空間">
+          <img class="archive-art" src="assets/living-archive/opening/archive-room-evidence-v3.png" alt="" aria-hidden="true">
+          <img id="restoration-entry-role-art" class="archive-overlay" src="assets/living-archive/opening/entry-role-v4.png" alt="" aria-hidden="true">
+          <img id="restoration-entry-threshold-art" class="archive-overlay" src="assets/living-archive/opening/entry-threshold-v4.png" alt="" aria-hidden="true" hidden>
+          <img id="restoration-entry-neglected-art" class="archive-overlay" src="assets/living-archive/opening/entry-neglected-v4.png" alt="" aria-hidden="true" hidden>
+          <img id="restoration-entry-role-continue-art" class="archive-overlay" src="assets/living-archive/opening/room-continue.png" alt="" aria-hidden="true">
+          <img id="restoration-entry-continue-art" class="archive-overlay" src="assets/living-archive/opening/entry-continue.png" alt="" aria-hidden="true" hidden>
+          <span id="restoration-entry-role-transcript" class="archive-sr-only" data-entry-transcript="role">廟祝：你是來修復廟藏文物的歷史修復師吧。有些舊物，我想請你幫忙看看。</span>
+          <span id="restoration-entry-threshold-transcript" class="archive-sr-only" data-entry-transcript="threshold" hidden>廟祝：前殿每天有人上香。這道門後的東西，卻少有人再問起。</span>
+          <span id="restoration-entry-neglected-transcript" class="archive-sr-only" data-entry-transcript="neglected" hidden>廟祝：這裡很久沒有人動過了。跟我來，腳下慢一點。</span>
+          <button id="restoration-entry-continue" class="archive-hit archive-hit--entry-advance" type="button" aria-label="繼續聽廟祝說話"></button>
+          <button id="restoration-follow" class="archive-hit archive-hit--entry" type="button" aria-label="跟隨廟祝，走進空間" disabled></button>
+        </section>
+        <section class="archive-scene" data-scene="room" hidden aria-label="廟藏空間">
+          <img class="archive-art" src="assets/living-archive/opening/archive-room-evidence-v3.png" alt="" aria-hidden="true">
+          <img class="archive-overlay" src="assets/living-archive/opening/identity.png" alt="" aria-hidden="true">
+          <img id="restoration-room-archive-art" class="archive-overlay" src="assets/living-archive/opening/room-archive-v4.png" alt="" aria-hidden="true">
+          <img id="restoration-room-task-art" class="archive-overlay" src="assets/living-archive/opening/room-task-v4.png" alt="" aria-hidden="true" hidden>
+          <img id="restoration-room-guide-art" class="archive-overlay" src="assets/living-archive/opening/room-guide-v4.png" alt="" aria-hidden="true" hidden>
+          <img id="restoration-room-cue-art" class="archive-overlay" src="assets/living-archive/opening/room-painting-cue.png" alt="" aria-hidden="true" hidden>
+          <img id="restoration-room-continue-art" class="archive-overlay" src="assets/living-archive/opening/room-continue.png" alt="" aria-hidden="true">
+          <span id="restoration-room-archive-transcript" class="archive-sr-only" data-room-transcript="archive">廟祝：畫、舊照片、留下字跡的木匾……這裡有不少等待修復的文物。</span>
+          <span id="restoration-room-task-transcript" class="archive-sr-only" data-room-transcript="task" hidden>廟祝：有些褪了色，有些連來歷也不清楚了。你得先找回線索，才能讀懂它們。</span>
+          <span id="restoration-room-guide-transcript" class="archive-sr-only" data-room-transcript="guide" hidden>廟祝：先從哪一件開始？就這幅吧。你剛才在前殿，也見過他們。查看這幅畫作。</span>
+          <button id="restoration-room-continue" class="archive-hit archive-hit--room-continue" type="button" aria-label="繼續聽廟祝說話" hidden></button>
+          <button id="restoration-room-painting" class="archive-hit archive-hit--room-painting" type="button" aria-label="查看文武二帝畫作"></button>
+        </section>
+        <section class="archive-scene" data-scene="painting" hidden aria-label="文武二帝畫作">
+          <img id="restoration-painting-art" class="archive-art" src="assets/living-archive/opening/painting-unrestored-v2.webp" alt="" aria-hidden="true"><img id="restoration-painting-previous" class="archive-art archive-painting-previous" src="assets/living-archive/opening/painting-unrestored-v2.webp" alt="" aria-hidden="true" hidden><img class="archive-overlay" src="assets/living-archive/opening/identity.png" alt="" aria-hidden="true">
+          <img id="restoration-painting-guide" class="archive-overlay" src="assets/living-archive/opening/painting-guide.png" alt="" aria-hidden="true" ><img class="archive-overlay" src="assets/living-archive/opening/return.png" alt="" aria-hidden="true" ><img class="archive-overlay" src="assets/living-archive/opening/annotation-wen-recognised.png" alt="" aria-hidden="true" data-annotation-wen-recognised hidden><img class="archive-overlay" src="assets/living-archive/opening/annotation-wen-pending.png" alt="" aria-hidden="true" data-annotation-wen-pending><img class="archive-overlay" src="assets/living-archive/opening/annotation-wu-recognised.png" alt="" aria-hidden="true" data-annotation-wu-recognised hidden><img class="archive-overlay" src="assets/living-archive/opening/annotation-wu-pending.png" alt="" aria-hidden="true" data-annotation-wu-pending><img class="archive-overlay" src="assets/living-archive/opening/completion-message.png" alt="" aria-hidden="true" id="restoration-completion-art" hidden>
+          <span class="archive-sr-only">廟祝：仔細看看。哪裡已經看不清楚了？文帝與武帝的畫像隨故事被重新辨認。</span>
+          <button id="restoration-painting-back" class="archive-hit archive-hit--back" type="button" aria-label="返回修復空間"></button>
+          <button data-portrait-wen class="archive-hit archive-hit--wen" type="button" aria-label="查看畫作中的文帝線索"></button>
+          <button data-portrait-wu class="archive-hit archive-hit--wu" type="button" aria-label="查看畫作中的武帝線索"></button>
+          <img class="archive-hotspot-cue archive-hotspot-cue--wen" src="assets/living-archive/opening/hotspot.png" alt="" aria-hidden="true" ><img class="archive-hotspot-cue archive-hotspot-cue--wu" src="assets/living-archive/opening/hotspot.png" alt="" aria-hidden="true" >
+          <button id="restoration-completion" class="archive-hit archive-hit--completion" type="button" aria-label="返回空間繼續探索" hidden></button>
+        </section>
+        <section class="archive-scene" data-scene="free-exploration" hidden aria-label="廟藏修復室">
+          <img class="archive-art" src="assets/living-archive/opening/archive-room-evidence-v3.png" alt="" aria-hidden="true" ><img class="archive-overlay" src="assets/living-archive/opening/identity.png" alt="" aria-hidden="true">
+          <button id="restoration-free-painting" class="archive-hit archive-hit--free-painting" type="button" aria-label="再看文武二帝畫作"></button>
+
+          <button data-artifact="photo" class="archive-hit" type="button" aria-label="查看舊照片" disabled><span class="archive-photo-entry-cue" aria-hidden="true"><img class="archive-photo-entry-ring" src="assets/living-archive/opening/hotspot.png" alt=""><img class="archive-photo-entry-title" src="assets/living-archive/photo-inquiry/text/room-photo-cue.png" alt=""></span></button><img class="archive-artifact-label" src="assets/living-archive/opening/artifact-photo-v2.png" alt="" aria-hidden="true">
+
+          <button data-artifact="map" class="archive-hit" type="button" aria-label="查看舊圖" disabled><span class="archive-map-entry-cue" aria-hidden="true"><img class="archive-map-entry-ring" src="assets/living-archive/opening/hotspot.png" alt=""><img class="archive-map-entry-title" src="assets/living-archive/map-ui/text-v2/room-map-cue.png" alt=""></span></button><img class="archive-artifact-label" src="assets/living-archive/opening/artifact-map-v2.png" alt="" aria-hidden="true">
+
+        </section>
+        <img id="archive-transition-art" class="archive-transition-art" src="assets/living-archive/opening/hero.webp" alt="" aria-hidden="true" hidden>
+      </div>
+      <span id="restoration-status" class="archive-sr-only" role="status" aria-live="polite" aria-atomic="true"></span>
+    </section>
+    <section class="history-view" id="history-view" hidden aria-labelledby="history-title" data-phase="observe">
+      <div class="history-stage" id="history-stage">
+        <picture class="history-art" aria-hidden="true">
+          <source media="(orientation: portrait) and (max-width: 600px)" srcset="assets/history-h01-mobile-v2.webp">
+          <source media="(orientation: portrait)" srcset="assets/history-h01-portrait-v2.webp">
+          <source media="(orientation: landscape) and (max-aspect-ratio: 7/5)" srcset="assets/history-h01-ipad-v2.webp">
+          <img id="history-image" src="assets/history-h01-wide-v2.webp" alt="">
+        </picture>
+        <div class="history-scene-wash" aria-hidden="true"></div>
+        <canvas class="history-traces" id="history-traces" aria-hidden="true"></canvas>
+        <header class="history-heading">
+          <span class="history-file">HISTORY FILE 01</span>
+          <h1 id="history-title">一個正在形成的社區</h1>
+          <p class="history-era">19世紀中葉 · 上環</p>
+          <p class="history-disclosure">情境重建｜依歷史資料作概略示意</p>
+        </header>
+        <div class="history-progress" role="status" aria-live="polite" aria-label="已發現 0 處，共 3 處">
+          <span>已發現</span><strong id="history-count">0 / 3</strong>
+          <span class="history-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+        <button class="history-hotspot" data-history-observation="ritual" type="button" aria-label="察看左方民居旁的活動"><span class="history-ring" aria-hidden="true"></span><span class="history-hotspot-label">察看</span></button>
+        <button class="history-hotspot" data-history-observation="discussion" type="button" aria-label="察看中央桌旁的活動"><span class="history-ring" aria-hidden="true"></span><span class="history-hotspot-label">察看</span></button>
+        <button class="history-hotspot" data-history-observation="mediation" type="button" aria-label="察看右方三人的活動"><span class="history-ring" aria-hidden="true"></span><span class="history-hotspot-label">察看</span></button>
+        <aside class="history-inference" id="history-inference" hidden aria-label="初步推論">
+          <span>初步推論 01</span>
+          <p>不同的需要，<br>似乎正在指向同一個地方。</p>
+          <small>尚待史料驗證</small>
+        </aside>
+        <div class="history-observation" id="history-observation" role="status" aria-live="polite" hidden></div>
+        <footer class="history-footer">
+          <button class="history-back" id="history-back" type="button">〈 回到修復室</button>
+          <p id="history-instruction">觀察這個社區正在發生甚麼。</p>
+          <button class="history-source" id="history-source" type="button" aria-controls="history-source-note" hidden>查看史料</button>
+        </footer>
+        <div class="history-source-note" id="history-source-note" hidden role="status">下一份史料將在歷史篇下一幕開啟；這裏仍只是初步推論。</div>
+      </div>
+    </section>
+    <section class="table-view" id="table-view" hidden aria-labelledby="table-title">
+      <button id="archive-room-back" type="button">〈 回到修復室</button>
+      <div class="table-scroll">
+        <div class="table-surface" id="table-surface">
+          <header class="table-heading">
+            <div class="table-identity"><a href="../" aria-label="返回文武廟首頁">文武廟</a><span>考察前 · 共同認識</span></div>
+            <h1 id="table-title">手記中的資料</h1>
+            <p>可以自由翻閱；先讀文與武，再追查上環的社區故事。</p>
+          </header>
+          <span class="cover-disclosure">封面為創作插畫，並非史料原件</span><div class="table-corner" aria-hidden="true"><span>上環</span><span>荷李活道</span></div>
+          <div class="folio-layer" id="folio-layer" aria-label="可選的文武廟資料"></div>
+          <div class="table-instruction" id="table-instruction">點一下打開 · 拖動材料，翻找更多線索</div>
+        </div>
+      </div>
+      <footer class="evidence-tray" aria-label="已收集的資料">
+        <div class="tray-title"><span>我的探索夾</span><small id="tray-status">尚未收集資料</small></div>
+        <div class="tray-slots" id="tray-slots"></div>
+        <button class="tray-continue" id="tray-continue" type="button">先讀文與武</button>
+      </footer>
+    </section>
+    <section class="document-view" id="document-view" hidden aria-labelledby="document-title">
+      <article class="document-paper" id="document-paper"></article>
+    </section>
+    <section class="summary-view" id="summary-view" hidden aria-labelledby="summary-title">
+      <div class="summary-paper">
+        <button class="summary-back" id="summary-back" type="button">← 返回資料桌</button>
+        <p class="summary-kicker">考察前 · 已找到的線索</p>
+        <h2 id="summary-title">帶着資料，走進現場。</h2>
+        <p class="summary-lead">這些資料提供背景；真正的細節與證據，留待你在文武廟現場尋找。</p>
+        <div class="summary-sources" id="summary-sources"></div>
+        <a class="summary-next" href="../experience/">繼續：入廟禮儀</a>
+      </div>
+    </section>
+  </main>
+  <script src="app.js?v=82" type="module"></script>
+</body>
+</html>

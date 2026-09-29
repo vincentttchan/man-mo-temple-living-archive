@@ -1,0 +1,44 @@
+/* The room is one painted scene. A second full scene reveals the lions later. */
+.room-local-repaint{position:absolute;inset:0;pointer-events:none;z-index:1}
+.room-evidence-light{position:absolute;inset:0;background:radial-gradient(ellipse 16% 25% at var(--light-x,72%) var(--light-y,29%),#f7d8a41c,transparent 75%);opacity:0;transition:opacity 1.5s}
+#restoration-root[data-guided-step=map] .room-evidence-light{opacity:1}
+#restoration-root[data-guided-step=photo] .room-evidence-light{opacity:1;--light-x:67.5%;--light-y:56%}
+.room-evidence-annotations{position:absolute;inset:0;pointer-events:none;z-index:6}
+.room-evidence-label{position:absolute;width:18%;height:auto;filter:drop-shadow(0 2px 4px #0e0806);opacity:.48;transition:opacity .6s}
+.room-evidence-label[data-active=true]{opacity:1}
+/* Each artwork label ends at its upper-right tip: anchor that tip to the object. */
+.room-label-map{left:53%;top:18%}
+.room-label-photo{left:46%;top:62%}
+.room-label-architecture{left:59%;top:49%}
+#restoration-root .archive-hit[data-artifact]:is(:hover,:focus-visible)+.archive-artifact-label{opacity:0}
+#restoration-root .archive-hit[data-artifact]:focus-visible{outline:1px solid #b69b6955;outline-offset:4px}
+#restoration-root .archive-scene[data-scene=free-exploration]::after{display:none}
+.archive-scene[data-scene=free-exploration] .architecture-room-model{z-index:2}
+.archive-scene[data-scene=free-exploration]:not(.architecture-explorable) .architecture-room-model{filter:brightness(.63)}
+.archive-scene[data-scene=free-exploration] .architecture-room-light{display:none}
+.map-room-world>.architecture-room-model,.photo-room-world>.architecture-room-model,.architecture-world>.architecture-model{z-index:2}
+.architecture-world>.architecture-foreground-occlusion{z-index:3}
+.map-room-world>.architecture-room-model{filter:brightness(.63)}
+.lion-room-presence{transition:opacity 1s}
+.lion-room-presence[hidden]{display:none!important}
+.photo-room-world[data-lion-revealed=false]>.lion-study-object{opacity:0;pointer-events:none}
+.photo-room-world>.lion-study-object{transition:opacity 1.2s;filter:brightness(.77) saturate(.8)}
+.lion-room-presence .lion-study-object{filter:brightness(.65) saturate(.8)}
+.lion-study-object::before{left:15%;right:15%;bottom:-1%;height:5%;background:#120b07c9;filter:blur(3px)}
+@media(prefers-reduced-motion:reduce){.room-evidence-label,.lion-room-presence,.photo-room-world>.lion-study-object{transition:none}}
+/* Evidence waits until the learner has finished the keeper's dialogue. */
+.archive-guided-caption.is-sequenced{pointer-events:auto;gap:16px;bottom:11%}
+.archive-guided-caption.is-sequenced img{animation:none!important}
+.archive-guided-caption.is-finished{display:none}
+.archive-guidance-advance{justify-self:start;min-width:44px;min-height:44px;padding:0;background:none;border:0;color:#e6d5b5;font:26px Georgia,serif;cursor:pointer}
+#restoration-root[data-guidance-ready=false] .room-evidence-light{opacity:0}
+#restoration-root[data-guidance-ready=true] .room-evidence-label[data-active=true]{animation:room-cue-in .8s ease both}
+@keyframes room-cue-in{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#restoration-root .room-evidence-label{animation:none!important}}
+
+/* A second painted room plate reveals the lions only after their photo clue. */
+.room-variant-lion{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .9s;pointer-events:none}
+.room-local-repaint[data-lion-revealed=true] .room-variant-lion{opacity:1}
+#restoration-root .archive-hit[data-artifact=map]{left:62.5%;top:12%;width:19.5%;height:35%}
+#restoration-root .archive-hit[data-artifact=photo]{left:61.5%;top:47.5%;width:12%;height:17%}
+@media(prefers-reduced-motion:reduce){.room-variant-lion{transition:none}}

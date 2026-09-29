@@ -1,0 +1,163 @@
+/* A single source plane moves beneath stationary editorial anchors. */
+#photo-inquiry{position:fixed;inset:0;z-index:41;background:#171512;color:#e8dbba;font-family:'Songti TC',serif}
+#photo-inquiry[hidden],#photo-inquiry [hidden]{display:none!important}
+.photo-stage{position:relative;width:100vw;height:100dvh;overflow:hidden;isolation:isolate;outline:none}
+.photo-stage::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(0deg,#16120fd9,transparent 15%),radial-gradient(ellipse at 12% 93%,#17120d80,transparent 37%),linear-gradient(#17120d33,transparent 12%)}
+#photo-inquiry button{font:inherit;color:inherit;background:transparent;border:0;cursor:pointer;min-width:44px;min-height:44px;padding:8px}
+#photo-inquiry button:focus-visible,#photo-inquiry summary:focus-visible{outline:1px solid #b19670;outline-offset:3px}
+.photo-surface:focus{outline:none}#photo-inquiry button img{height:17px;max-width:100%;width:auto;pointer-events:none}
+.photo-room-camera{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;transition:opacity .6s}
+.photo-room-world{position:absolute;inset:0;transform-origin:71% 60%;transition:transform 1.1s ease}.photo-room{width:100%;height:100%;object-fit:cover}
+#photo-inquiry[data-view=entering] .photo-room-world{transform:scale(1.55)}
+#photo-inquiry:is([data-view=photo],[data-view=record]) .photo-room-camera{opacity:0}
+.photo-evidence{position:absolute;z-index:2;inset:0;opacity:0;pointer-events:none;transition:opacity .7s}
+#photo-inquiry[data-view=entering] .photo-evidence{opacity:1}
+#photo-inquiry:is([data-view=photo],[data-view=record]) .photo-evidence{opacity:1;pointer-events:auto}
+.photo-surface{position:absolute;inset:0;overflow:hidden;touch-action:none;cursor:grab}
+.photo-surface:active{cursor:grabbing}.photo-plane{position:absolute;left:0;top:0;width:100%;aspect-ratio:1378/1000;transform-origin:0 0}
+.photo-original{display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none}
+#photo-inquiry .photo-detail{position:absolute;z-index:2;background:transparent;padding:0;cursor:pointer}
+#photo-inquiry .photo-detail:disabled{pointer-events:none}#photo-inquiry .photo-detail:focus-visible{outline:1px dashed #4d352aa0;outline-offset:0}
+.photo-marks{position:absolute;inset:0;pointer-events:none;z-index:3}
+.photo-mark{position:absolute;width:16px;height:16px;transform:translate(-50%,-50%) scale(var(--photo-inverse-scale,1));opacity:.6;pointer-events:none}
+.photo-year,.photo-prompt-anchor,.photo-controls,.photo-source,.photo-documentary,.photo-judgement{position:absolute;z-index:5}
+.photo-year{left:4%;top:5%;pointer-events:none;filter:drop-shadow(0 1px 3px #17110f)}.photo-year img{height:24px;width:auto}
+.photo-prompt-anchor{left:5%;right:5%;bottom:12%;min-height:100px;display:flex;flex-direction:column;align-items:start;justify-content:flex-start;pointer-events:none;filter:drop-shadow(0 1px 4px #120a05)}
+.photo-prompt{min-height:55px;max-width:75%;transition:opacity .18s;pointer-events:none}.photo-prompt.is-changing{opacity:0}
+.photo-prompt img{width:auto;max-width:100%;height:23px;object-fit:contain;object-position:left top}
+#photo-inquiry:is([data-prompt=observe],[data-prompt=lion-question],[data-prompt=street-question],[data-prompt=sign-canvas],[data-prompt=observations-found],[data-prompt=observations-limit],[data-prompt=judgement-question],[data-prompt=judgement-canvas-retry],[data-prompt=judgement-canvas-ack],[data-prompt=record-question],[data-prompt=record-bridge]) .photo-prompt img{height:56px}
+.photo-navigation-guide{opacity:.65;margin-top:10px;pointer-events:none}.photo-navigation-guide img{height:14px;width:auto;max-width:100%}
+#photo-inquiry:not([data-state=photo_question]):not([data-state=photo_select]) .photo-navigation-guide,#photo-inquiry[data-explored=true] .photo-navigation-guide{display:none}
+.photo-actions{display:flex;align-items:center;gap:18px;margin:12px 0 0 -8px;pointer-events:auto}
+.photo-actions button{opacity:.85}.photo-actions button:hover{opacity:1}
+.photo-controls{right:4%;bottom:3%;display:flex;gap:3px}.photo-controls button{font:22px Georgia,serif!important;opacity:.65;background:#17120d20!important}.photo-controls button:hover{opacity:1}
+.photo-source{left:4%;bottom:2%;font-size:13px;z-index:9}.photo-source summary{cursor:pointer;min-height:44px;display:flex;flex-direction:column;align-items:start;justify-content:center;list-style:none;gap:7px;opacity:.65}.photo-source summary::-webkit-details-marker{display:none}.photo-source summary img{height:12px;width:auto}.photo-source small{font:10px Georgia,serif;letter-spacing:.04em}
+.photo-source>div{position:absolute;bottom:110%;left:0;width:min(460px,85vw);max-height:65vh;overflow:auto;padding:22px;background:#211b16f5;box-sizing:border-box;line-height:1.7}.photo-source a{color:#d2b786}.photo-source-close{float:right}
+.photo-documentary{right:5%;top:21%;max-width:34%;display:flex;flex-direction:column;gap:14px;align-items:start;pointer-events:none;filter:drop-shadow(0 1px 5px #100a06)}
+.photo-documentary img{width:auto;max-width:100%;object-fit:contain;object-position:left top}.documentary-year{height:28px}.documentary-line{height:21px}.documentary-credit{height:38px;opacity:.8}.documentary-attribution{height:15px;opacity:.8}.documentary-body{height:54px}
+#photo-inquiry[data-state=lion_read] .photo-documentary::before{content:'';position:absolute;z-index:-1;inset:-35px -20px;background:radial-gradient(ellipse,#17120d80,transparent 75%)}
+.photo-judgement{left:5%;bottom:5%;max-width:80%}.judgement-options{display:flex;gap:25px}.judgement-options button{border-bottom:1px solid #b1967077!important}
+#photo-inquiry[data-state=source_judgement] .photo-source,#photo-inquiry[data-state=source_judgement] .photo-controls{opacity:.4}
+#photo-inquiry[data-view=record] .photo-documentary{right:4%;top:29%;max-width:36%}
+#photo-inquiry:is([data-view=room],[data-view=entering]) :is(.photo-year,.photo-prompt-anchor,.photo-source,.photo-controls,.photo-documentary,.photo-judgement){opacity:0;pointer-events:none}
+.photo-loading{position:absolute;z-index:10;left:5%;top:40%;background:#211b16eb;padding:20px}
+/* Existing room dialogue shares the same visual voice. */
+.archive-guided-caption{position:absolute;left:7%;bottom:12%;z-index:5;display:grid;gap:1.3cqw;pointer-events:none;filter:drop-shadow(0 2px 4px #100b07)}
+.archive-guided-caption img{height:1.55cqw;width:auto;max-width:75cqw}.archive-guided-line-2{animation:photo-trace-in 1.5s 1.7s both}
+@keyframes photo-trace-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#restoration-root .archive-scene[data-scene=free-exploration]>.archive-overlay[src$="free-guide.png"]{display:none!important}
+/* Existing models in completed rooms retain their saved presentation. */
+.lion-room-presence{position:absolute;inset:0;z-index:2;pointer-events:none}
+.lion-study-object{position:absolute;left:71%;top:59%;width:22%;aspect-ratio:3/2;isolation:isolate}.lion-study-art{display:block;width:100%;height:100%;pointer-events:none;user-select:none}
+.lion-texture{position:absolute;display:block;pointer-events:none;mix-blend-mode:multiply;filter:saturate(6) grayscale(1) brightness(1.8) contrast(2.5);opacity:.95;mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent)}
+.lion-texture-date{left:33.8%;top:58%;width:5.4%;height:30%;background:url('assets/living-archive/photo-inquiry/lion-inscription-date-reference.jpg') 71.2% 76.1% / 1250% 344.83% no-repeat;transform:rotate(1deg)}
+.lion-texture-donor{left:63%;top:58%;width:5.4%;height:30%;background:url('assets/living-archive/photo-inquiry/lion-inscription-donor-reference.jpg') 38.83% 83.1% / 1666.67% 344.83% no-repeat;transform:rotate(1deg)}
+@media(max-width:1100px){.photo-prompt img{height:21px}.photo-prompt-anchor{bottom:13%}.photo-documentary{max-width:37%}.documentary-line{height:18px}.documentary-credit{height:34px}.documentary-body{height:50px}.photo-year img{height:22px}}
+@media(max-width:600px){.photo-prompt-anchor{bottom:16%;min-height:105px}.photo-prompt{max-width:100%}.photo-prompt img{height:19px}#photo-inquiry:is([data-prompt=observe],[data-prompt=lion-question],[data-prompt=street-question],[data-prompt=sign-canvas],[data-prompt=observations-found],[data-prompt=observations-limit],[data-prompt=judgement-question],[data-prompt=judgement-canvas-retry],[data-prompt=judgement-canvas-ack],[data-prompt=record-question],[data-prompt=record-bridge]) .photo-prompt img{height:47px}.photo-year img{height:20px}.photo-source small{font-size:8px;max-width:200px}.photo-controls{right:4%;bottom:3%}.photo-source{bottom:3%}.photo-documentary{top:16%;left:auto;right:5%;max-width:64%;gap:9px}.documentary-year{height:21px}.documentary-line{height:16px}.documentary-credit{height:31px}.photo-judgement{bottom:8%;max-width:90%}.judgement-options{gap:12px}.judgement-options button img{height:14px!important}#photo-inquiry[data-view=record] .photo-documentary{top:12%;left:5%;max-width:90%}.documentary-body{height:46px}}
+@media(prefers-reduced-motion:reduce){#photo-inquiry *, .archive-guided-line-2{transition:none!important;animation:none!important}}
+.photo-prompt-anchor{height:125px;min-height:0}
+@media(max-width:600px){.photo-prompt-anchor{height:125px;min-height:0}}
+/* Nested material study: the real photographic plane remains mounted beneath it. */
+.lion-study-layer{position:absolute;inset:0;z-index:4;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1.1s ease,visibility 1.1s;overflow:hidden;background:#211a13}
+#photo-inquiry[data-view=study] .lion-study-layer{opacity:1;visibility:visible;pointer-events:auto}
+.lion-study-background{position:absolute;inset:-4%;background:linear-gradient(#21190ecc,#21190ef5),url('assets/living-archive/opening/archive-room-lion-revealed-v3.png') center/cover;filter:blur(14px);transition:transform .25s ease}
+.lion-study-surface{position:absolute;inset:0;touch-action:none;cursor:grab;outline:none}
+.lion-study-surface:active{cursor:grabbing}
+.lion-study-surface:focus-visible{box-shadow:inset 0 0 0 1px #b1967030}
+.lion-study-plane{position:absolute;width:min(84vw,100vh);aspect-ratio:3/2;left:50%;top:42%;transform:translate(calc(-50% + var(--study-x,0px)),-50%) scale(var(--study-zoom,1));transition:transform .28s ease;filter:drop-shadow(0 20px 25px #120c0680)}
+.lion-study-light{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at var(--study-light,50%) 27%,#ffd69616,transparent 62%);mix-blend-mode:soft-light;transition:background .3s}
+.lion-study-mark{position:absolute;width:16px;height:16px;transform:translate(-50%,-50%);opacity:.6;pointer-events:none}
+.lion-study-credit{position:absolute;left:4%;top:10%;opacity:.7;pointer-events:none}.lion-study-credit img{height:13px;max-width:88vw;object-fit:contain;object-position:left}
+.lion-study-hint{position:absolute;right:5%;bottom:17%;opacity:.7;transition:opacity .6s;pointer-events:none}.lion-study-hint img{height:17px;width:auto}
+#photo-inquiry[data-study-moved=true] .lion-study-hint{opacity:0}
+#photo-inquiry[data-view=study] .photo-year img{height:20px}
+#photo-inquiry[data-view=study] .photo-evidence{opacity:.2;filter:blur(5px);pointer-events:none}
+#photo-inquiry[data-view=study] .photo-room-camera{opacity:0}
+#photo-inquiry[data-prompt=study-observe] .photo-prompt img{height:56px}
+.photo-lion-memory{position:absolute;z-index:5;right:5%;top:8%;opacity:.8;pointer-events:none;filter:drop-shadow(0 1px 4px #120a05)}.photo-lion-memory::before{content:"";position:absolute;inset:-7px -12px;z-index:-1;background:radial-gradient(ellipse,#21190ddd,transparent 78%)}.photo-lion-memory img{height:15px;max-width:60vw;object-fit:contain;object-position:right}
+@media(max-width:600px){.lion-study-plane{width:96vw;top:43%}.lion-study-credit{top:11%;right:4%}.lion-study-credit img{height:11px}.lion-study-hint{bottom:23%}.lion-study-hint img{height:14px}#photo-inquiry[data-prompt=study-observe] .photo-prompt img{height:47px}.photo-lion-memory{top:12%;right:5%}.photo-lion-memory img{height:12px;max-width:78vw}}
+#photo-inquiry .lion-inscription-hit{position:absolute;top:56%;width:10%;height:33%;min-width:44px;min-height:44px;padding:0;background:transparent;cursor:pointer;z-index:3}
+.lion-inscription-date{left:31.5%}.lion-inscription-donor{left:60.5%}
+#photo-inquiry .lion-inscription-hit:focus-visible{outline:1px solid #b1967077;outline-offset:2px}
+.lion-inscription-note{display:flex;flex-direction:column;gap:9px;margin-top:0;pointer-events:none}.lion-inscription-note img{height:16px;width:auto;max-width:90vw;object-fit:contain;object-position:left}
+#photo-inquiry:is([data-prompt=inscription-date],[data-prompt=inscription-donor]) .photo-prompt{min-height:36px}
+@media(max-width:600px){.lion-inscription-note img{height:13px}.lion-inscription-note{gap:6px}}
+/* 1880 lives beside the evidence image, never pinned onto its contents. */
+#photo-inquiry{--photo-share:78%}
+.photo-evidence{right:0;transition:opacity .7s,right 1.2s ease}
+#photo-inquiry[data-view=record] .photo-evidence{right:calc(100% - var(--photo-share))}
+.photo-evidence-rail{position:absolute;z-index:5;left:var(--photo-share);right:0;top:0;bottom:0;padding:5vh 22px 0;box-sizing:border-box;background:linear-gradient(90deg,#171512e6,#171512);animation:rail-enter 1.2s ease both;pointer-events:none}
+.photo-evidence-rail img{display:block;width:auto;max-width:100%;object-fit:contain;object-position:left}
+.rail-heading{padding-bottom:17px;border-bottom:1px solid #b1967055}.rail-heading img{height:17px;opacity:.85}
+.rail-year{margin-top:35px}.rail-year img{height:24px;opacity:.85}
+.rail-terms{display:grid;gap:30px;margin-top:34px}.rail-terms img{height:25px}
+.rail-reveal{opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s}.rail-reveal.is-revealed{opacity:1;visibility:visible}
+.rail-reflection{margin-top:50px}.rail-reflection img{height:49px}
+.rail-source{margin-top:20px}.rail-source img{height:13px;opacity:.65}
+.evidence-bridge{position:absolute;z-index:6;left:calc(var(--photo-share) - 10%);bottom:15%;max-width:29%;filter:drop-shadow(0 1px 5px #171512);pointer-events:none}
+.evidence-bridge img{height:43px;max-width:100%;object-fit:contain;object-position:left}
+#photo-inquiry[data-view=record] .photo-controls{right:calc(100% - var(--photo-share) + 2%)}
+#photo-inquiry[data-state=record_1880] .photo-prompt-anchor{visibility:hidden;pointer-events:none}
+#photo-inquiry[data-state=record_question] .photo-prompt-anchor{right:calc(100% - var(--photo-share) + 3%)}
+#photo-inquiry[data-prompt=rail-c6] .photo-prompt img{height:56px}
+#photo-inquiry[data-state=record_question] .rail-reflection{opacity:.3}
+#photo-inquiry[data-state=record_question] .rail-source{opacity:.5}
+@keyframes rail-enter{from{opacity:0;transform:translateX(15px)}to{opacity:1;transform:none}}
+@media(min-width:601px) and (max-width:900px){#photo-inquiry{--photo-share:70%}}
+@media(min-width:601px) and (max-width:1100px){.photo-evidence-rail{padding-left:18px;padding-right:15px}.rail-heading img{height:15px}.rail-terms img{height:22px}.rail-reflection img{height:43px}.rail-source img{height:11px}.rail-terms{gap:25px}.evidence-bridge img{height:38px}}
+/* A 390px portrait screen cannot fit readable terms into a 22% rail. */
+@media(max-width:600px){
+ #photo-inquiry[data-view=record] .photo-evidence{right:0;bottom:42%}
+ .photo-evidence-rail{left:0;top:58%;padding:14px 5% 0;animation:none}
+ .rail-heading{padding-bottom:8px}.rail-heading img{height:14px}.rail-year{margin-top:12px}.rail-year img{height:19px}
+ .rail-terms{gap:12px;margin-top:14px}.rail-terms img{height:20px}
+ .rail-reflection{position:absolute;left:51%;top:72px;right:5%;margin:0}.rail-reflection img{height:auto;max-height:45px}
+ .rail-source{position:absolute;left:51%;top:141px;right:5%;margin:0}.rail-source img{height:11px}
+ .evidence-bridge{left:5%;bottom:44%;max-width:74%}.evidence-bridge img{height:30px}
+ #photo-inquiry[data-view=record] .photo-controls{right:4%;bottom:42%}
+ #photo-inquiry[data-view=record] .photo-source{bottom:42%}
+ #photo-inquiry[data-state=record_question] .photo-prompt-anchor{left:5%;right:5%;bottom:0;height:100px}
+ #photo-inquiry[data-prompt=rail-c6] .photo-prompt img{height:43px}
+ #photo-inquiry[data-state=record_question] .rail-reflection,#photo-inquiry[data-state=record_question] .rail-source{visibility:hidden}
+ #photo-inquiry[data-state=record_question] .rail-terms{display:flex;gap:20px}.photo-lion-memory img{max-width:78vw}
+}
+@media(prefers-reduced-motion:reduce){.photo-evidence-rail{animation:none}.rail-reveal{transition:none}}
+/* The bridge belongs to the shared boundary, not a caption on the photograph. */
+.evidence-bridge{left:calc(var(--photo-share) + 22px);max-width:calc(100% - var(--photo-share) - 44px)}
+@media(max-width:600px){
+ .evidence-bridge{left:51%;bottom:7%;max-width:44%}.evidence-bridge img{height:33px}
+ #photo-inquiry[data-view=record] .photo-evidence::after{content:'';position:absolute;left:0;right:0;bottom:0;height:85px;z-index:4;pointer-events:none;background:linear-gradient(transparent,#171512cf)}
+ #photo-inquiry[data-view=record] .photo-source>div{max-height:42vh}
+ #photo-inquiry[data-state=record_question] .rail-reflection,#photo-inquiry[data-state=record_question] .rail-source{display:none}
+}
+#photo-inquiry[data-state=record_question] .photo-prompt-anchor{z-index:6}
+@media(max-width:600px){#photo-inquiry[data-state=record_question] .photo-prompt-anchor{bottom:2%;height:115px}}
+/* Continuous inquiry uses editorial copy on the existing photographic plane. */
+.photo-editorial{font-size:clamp(21px,2.1vw,32px);line-height:1.7;margin:0;max-width:780px;white-space:pre-line}.photo-prompt small{display:block;font-size:clamp(13px,1.15vw,17px);line-height:1.7;margin-top:12px;max-width:670px;color:#d2c5a5}
+.rail-heading{font-size:clamp(16px,1.45vw,22px);line-height:1.7}.rail-reflection{font-size:clamp(17px,1.5vw,23px);line-height:1.8}
+.photo-question-choices{position:absolute;z-index:8;left:5%;bottom:12%;width:66%;display:flex;flex-direction:column;align-items:flex-start;gap:12px;pointer-events:auto;background:linear-gradient(90deg,#171512a8,transparent)}
+#photo-inquiry .photo-question-choices button{text-align:left;font-size:clamp(17px,1.6vw,24px);line-height:1.6;padding:6px 0;border-bottom:1px solid #b1967050}
+#photo-inquiry[data-state=record_question] .photo-prompt-anchor{bottom:40%;min-height:0}.photo-actions .photo-next{font-size:clamp(17px,1.5vw,22px)}
+#photo-inquiry[data-state=roof_observation] .photo-prompt-anchor{pointer-events:none}
+@media(max-width:600px){.photo-editorial{font-size:21px}.photo-prompt{max-width:100%}.photo-question-choices{left:5%;width:90%;bottom:10%;gap:8px}.photo-question-choices button{font-size:17px!important}.photo-prompt small{font-size:13px}.rail-heading{font-size:15px}.rail-reflection{font-size:16px;line-height:1.6}#photo-inquiry[data-state=record_question] .photo-evidence-rail{opacity:.22}#photo-inquiry[data-state=record_question] .photo-prompt-anchor{bottom:42%;height:auto}.photo-prompt-anchor{bottom:12%}.photo-actions{gap:8px}}
+.photo-question-choices{background:linear-gradient(90deg,#171512bd,#1715126b 80%,transparent);text-shadow:0 1px 5px #0c0907}
+#photo-inquiry[data-state=record_question] .photo-prompt{background:linear-gradient(90deg,#1715129c,transparent);text-shadow:0 1px 5px #0c0907}
+@media(max-width:600px){#photo-inquiry[data-state=record_question] .photo-prompt-anchor{top:60%;bottom:auto;height:auto}#photo-inquiry[data-state=record_question] .photo-evidence-rail{opacity:0}#photo-inquiry[data-state=record_question] .photo-prompt{background:none}.photo-question-choices{background:none}}
+/* The longer chronology note must keep its action below the copy on phones. */
+@media(max-width:600px){
+ #photo-inquiry:is([data-state=roof_limit],[data-state=roof_model_bridge]) .photo-prompt-anchor{height:auto;bottom:12%;background:linear-gradient(90deg,#171512bd,#17151275 85%,transparent)}
+ #photo-inquiry:is([data-state=roof_limit],[data-state=roof_model_bridge]) .photo-prompt{flex-shrink:0}
+}
+/* One continuous photo canvas: no reserved columns before documentary evidence. */
+#photo-inquiry[data-view=photo] .photo-stage::after{background:linear-gradient(0deg,#16120fed,transparent 25%)}
+#photo-inquiry[data-view=photo] .photo-prompt-anchor{left:4%;right:auto;width:min(560px,88%);bottom:10%;height:auto;min-height:0}
+#photo-inquiry[data-view=photo] .photo-prompt{max-width:100%;min-height:0}
+#photo-inquiry[data-view=photo] .photo-editorial{max-width:560px;font-size:clamp(21px,1.8vw,29px);line-height:1.6}
+#photo-inquiry[data-view=photo] .photo-prompt small{max-width:560px;margin-top:8px}
+#photo-inquiry[data-view=photo] .photo-year{left:4%;top:4%}
+#photo-inquiry[data-view=photo] .photo-controls{right:4%;bottom:3%}
+#photo-inquiry[data-view=photo] .photo-source{left:4%;bottom:2%}
+@media(max-width:600px){
+ #photo-inquiry[data-view=photo] .photo-prompt-anchor{bottom:13%}
+ #photo-inquiry[data-view=photo] .photo-editorial{font-size:20px}
+}

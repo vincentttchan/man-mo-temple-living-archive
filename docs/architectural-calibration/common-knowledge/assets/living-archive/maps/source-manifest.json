@@ -1,0 +1,51 @@
+{
+  "retrievedAt": "2026-09-26",
+  "scene": "04-B",
+  "maps": [
+    {
+      "id": "victoria-1889",
+      "role": "primary",
+      "title": "Plan of the City of Victoria, Hong Kong",
+      "mapDate": 1889,
+      "publicationDate": 1889,
+      "provider": "Lands Department, Hong Kong SAR Government",
+      "sourcePage": "https://data.gov.hk/en-data/dataset/hk-landsd-openmap-historical-maps/resource/e2ccb33a-81da-4ff9-a1ad-38a25747762b",
+      "originalDownloadUrl": "https://www.landsd.gov.hk/landsd_psi_data/SMO/image/City_of_Victoria_HongKong1889.zip",
+      "localFile": "victoria-1889-source.webp",
+      "status": "authentic-raster-downloaded-and-visually-verified",
+      "sourceDimensions": {
+        "width": 15280,
+        "height": 6699
+      },
+      "outputDimensions": {
+        "width": 15280,
+        "height": 6699
+      },
+      "conversion": {
+        "format": "WebP",
+        "quality": 92,
+        "method": 6,
+        "resize": false,
+        "crop": null,
+        "colorOrGeometryAlterations": false
+      },
+      "sourceSha256": "7df1aeb6d7c6293c2c267bfbd39f78204e3fb1dad01666c75a08f69b6d431768",
+      "rights": "Reuse permitted by DATA.GOV.HK Terms and Conditions with attribution. Intellectual property ownership acknowledged: Hong Kong SAR Government / Lands Department.",
+      "rightsUrl": "https://data.gov.hk/en/terms-and-conditions",
+      "orientation": "North-up georeferenced scan, retaining original black no-data wedges.",
+      "suggestedSheungWanViewInSourcePixels": [
+        4000,
+        1000,
+        7000,
+        3500
+      ],
+      "sourceFormat": "GeoTIFF from official ZIP",
+      "sourceArchiveMember": "City_of_Victoria_HongKong1889.tif",
+      "sourceCoordinateSystem": "Hong Kong 1980 Grid (EPSG:2326), per Lands Department metadata",
+      "metadataUrl": "https://portal.csdi.gov.hk/geoportal/rest/metadata/item/landsd_rcd_1631586233937_28500",
+      "outputSha256": "4e8973e6b478f3f2e0e1aa060fc2c640d33cd15f722d99ae11ba080043a101e7",
+      "outputBytes": 7703720
+    }
+  ],
+  "displayPolicy": "Scene 04-B v2 uses only the authentic 1889 raster. The student judgement and verified temple anchor use normalized full-source coordinates; no score or distance rating."
+}

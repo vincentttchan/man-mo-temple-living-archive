@@ -1,0 +1,76 @@
+.restoration-journey{position:fixed;inset:0;z-index:22;background:#120d0a;display:grid;place-items:center;overflow:hidden}
+.restoration-journey[hidden],.restoration-journey [hidden]{display:none!important}
+.archive-stage{position:relative;width:min(100vw,177.77778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;overflow:hidden;background:#120d0a;isolation:isolate}
+.archive-scene,.archive-art,.archive-overlay{position:absolute;inset:0;width:100%;height:100%}
+.archive-scene{overflow:hidden}
+.archive-art,.archive-overlay{display:block;object-fit:contain;pointer-events:none;user-select:none}
+.archive-overlay{z-index:2}
+.archive-hit{position:absolute;z-index:3;min-width:44px;min-height:44px;border:0;padding:0;background:transparent;color:transparent;cursor:pointer;touch-action:manipulation}
+.restoration-journey[data-input="pointer"] .archive-hit:focus-visible{outline:none}
+.restoration-journey[data-input="keyboard"] .archive-hit:focus-visible{outline:3px solid #efd4a5;outline-offset:2px}
+.archive-hit:disabled{pointer-events:none;cursor:default}
+.archive-hit--hero{left:66%;top:77%;width:27%;height:17%}
+.archive-hit--entry{left:69%;top:84%;width:29%;height:14%}
+.archive-hit--entry-advance{left:85%;bottom:4%;width:12%;height:7%}
+.archive-hit--room-painting,.archive-hit--free-painting{left:26%;top:24%;width:26%;height:41%}
+.archive-hit--room-continue{left:85%;bottom:4%;width:12%;height:7%}
+.archive-hit--wen{left:25%;top:22%;width:27%;height:49%}
+.archive-hit--wu{left:55%;top:22%;width:29%;height:49%}
+.archive-hit--back{right:6%;top:2%;width:15%;height:9%}
+.archive-hit--completion{left:39%;bottom:1%;width:27%;height:10%}
+.archive-hotspot-cue{position:absolute;width:5%;min-width:50px;height:auto;aspect-ratio:1;object-fit:contain;transform:translate(-50%,-50%);opacity:.35;pointer-events:none;transition:opacity .25s ease}
+.archive-hotspot-cue--wen{left:37%;top:49%}.archive-hotspot-cue--wu{left:67%;top:52%}
+.archive-hit--wen:hover~.archive-hotspot-cue--wen,.restoration-journey[data-input="keyboard"] .archive-hit--wen:focus-visible~.archive-hotspot-cue--wen,.archive-hit--wu:hover~.archive-hotspot-cue--wu,.restoration-journey[data-input="keyboard"] .archive-hit--wu:focus-visible~.archive-hotspot-cue--wu{opacity:.8}
+.archive-hit[data-artifact=plaque]{left:81%;top:13%;width:10%;height:24%}
+.archive-hit[data-artifact=photo]{left:66%;top:49%;width:9%;height:19%}
+.archive-hit[data-artifact=document]{left:80%;top:66%;width:10%;height:13%}
+.archive-hit[data-artifact=map]{left:66%;top:13%;width:14%;height:25%}
+.archive-hit[data-artifact=vessel]{left:55%;top:47%;width:9%;height:19%}
+.archive-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(prefers-reduced-motion:reduce){.archive-hotspot-cue{transition:none}}
+
+.archive-hero-clean{opacity:0;transition:opacity .32s ease}
+.archive-stage.is-entering .archive-hero-clean{opacity:1}
+.archive-stage.is-entering .archive-scene[data-scene="hero"]{transform:scale(1.012);transition:transform .32s ease}
+@media(prefers-reduced-motion:reduce){.archive-hero-clean,.archive-stage.is-entering .archive-scene[data-scene="hero"]{transition:none}}
+
+.archive-transition-art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;z-index:8;opacity:1;transition:opacity .58s ease,transform .58s ease}
+.archive-transition-art.is-dissolving{opacity:0}
+.archive-transition-art[data-motion="hero-to-archive-entry"]{transform-origin:20% 52%}
+.archive-transition-art[data-motion="hero-to-archive-entry"].is-dissolving{transform:scale(1.09)}
+.archive-transition-art[data-motion="archive-entry-to-room"]{transform-origin:59% 47%}
+.archive-transition-art[data-motion="archive-entry-to-room"].is-dissolving{transform:scale(1.08)}
+.archive-transition-art[data-motion="room-to-painting"]{transform-origin:39% 43%}
+.archive-transition-art[data-motion="room-to-painting"].is-dissolving{transform:scale(1.12)}
+.archive-transition-art[data-motion="painting-to-room"],.archive-transition-art[data-motion="painting-to-free-exploration"]{transform-origin:39% 43%}
+.archive-transition-art[data-motion="painting-to-room"].is-dissolving,.archive-transition-art[data-motion="painting-to-free-exploration"].is-dissolving{transform:scale(.94)}
+.archive-painting-previous{z-index:1;opacity:1;transition:opacity .65s ease}
+.archive-painting-previous.is-dissolving{opacity:0}
+@media(prefers-reduced-motion:reduce){.archive-transition-art,.archive-painting-previous{transition:none!important}}
+
+.archive-artifact-label{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;z-index:2;opacity:0;transition:opacity .2s ease}
+.archive-hit[data-artifact]:hover + .archive-artifact-label,.restoration-journey[data-input="keyboard"] .archive-hit[data-artifact]:focus-visible + .archive-artifact-label{opacity:1}
+@media(prefers-reduced-motion:reduce){.archive-artifact-label{transition:none}}
+
+.archive-scene .archive-art.is-arriving{transform:scale(1.035);transition:transform .58s ease-out}
+.archive-scene .archive-art.is-arriving.is-settled{transform:scale(1)}
+.archive-art[data-arrival="hero-to-archive-entry"],.archive-art[data-arrival="archive-entry-to-room"]{transform-origin:30% 50%}
+.archive-art[data-arrival="room-to-painting"],.archive-art[data-arrival="painting-to-room"],.archive-art[data-arrival="painting-to-free-exploration"]{transform-origin:39% 43%}
+@media(prefers-reduced-motion:reduce){.archive-scene .archive-art.is-arriving{transition:none;transform:none}}
+
+.archive-story-bridge{position:fixed;inset:0;z-index:120;display:grid;place-items:center;overflow:hidden;background:#170f0c;pointer-events:auto;opacity:1;transition:opacity .42s ease}
+.archive-story-bridge.is-fading{opacity:0}
+.archive-story-stage{position:relative;width:min(100vw,177.77778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;overflow:hidden}
+.archive-story-bridge[data-direction="enter"] .archive-story-stage{transition:transform .85s cubic-bezier(.2,.62,.18,1)}
+.archive-story-bridge[data-direction="enter"][data-part="wen"].is-zooming .archive-story-stage{transform:scale(1.86) translateX(13%)}
+.archive-story-bridge[data-direction="enter"][data-part="wu"].is-zooming .archive-story-stage{transform:scale(1.86) translateX(-18%)}
+.archive-story-full-art{display:block;width:100%;height:100%;object-fit:cover}
+@media(prefers-reduced-motion:reduce){.archive-story-bridge{display:none}}
+
+/* The active map is discoverable in the room, before entering its observation view. */
+.archive-map-entry-cue{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:0;pointer-events:none;opacity:.72;transition:opacity .25s;filter:drop-shadow(0 2px 3px #130d08)}
+.archive-map-entry-ring{display:block;width:clamp(64px,7vw,100px);height:auto;flex:none}
+.archive-map-entry-title{display:block;width:clamp(64px,6vw,96px);height:auto;max-width:none;margin-left:-18px;background:#1b120c9c;padding:8px 10px}
+.archive-hit[data-artifact=map]:disabled .archive-map-entry-cue{display:none}
+.archive-hit[data-artifact=map]:is(:hover,:focus-visible) .archive-map-entry-cue{opacity:1}
+@media(prefers-reduced-motion:reduce){.archive-map-entry-cue{transition:none}}

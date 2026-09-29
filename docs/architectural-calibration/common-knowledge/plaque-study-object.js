@@ -1,0 +1,3 @@
+const master='assets/living-archive/threshold/plaque-master.png';
+// Every reading layer samples the same colour master at the same coordinates.
+export function plaqueStudyObject(){return `<div class="plaque-study-object" data-readability="veiled"><div class="plaque-study-mount" aria-hidden="true"></div><img class="plaque-master" src="${master}" alt="神威普佑牌匾研究表現；金底深色平面書法，從右至左閱讀。原物仍在文武廟。" draggable="false"><img class="plaque-face" src="${master}" alt="" aria-hidden="true" draggable="false"><img class="plaque-inscription" src="${master}" alt="" aria-hidden="true" draggable="false"><div class="plaque-study-haze" aria-hidden="true"></div><div class="plaque-study-light" aria-hidden="true"></div></div>`;}

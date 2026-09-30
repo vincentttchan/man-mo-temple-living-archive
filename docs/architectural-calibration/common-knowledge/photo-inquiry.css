@@ -98,10 +98,7 @@
 .evidence-bridge img{height:43px;max-width:100%;object-fit:contain;object-position:left}
 #photo-inquiry[data-view=record] .photo-controls{right:calc(100% - var(--photo-share) + 2%)}
 #photo-inquiry[data-state=record_1880] .photo-prompt-anchor{visibility:hidden;pointer-events:none}
-#photo-inquiry[data-state=record_question] .photo-prompt-anchor{right:calc(100% - var(--photo-share) + 3%)}
 #photo-inquiry[data-prompt=rail-c6] .photo-prompt img{height:56px}
-#photo-inquiry[data-state=record_question] .rail-reflection{opacity:.3}
-#photo-inquiry[data-state=record_question] .rail-source{opacity:.5}
 @keyframes rail-enter{from{opacity:0;transform:translateX(15px)}to{opacity:1;transform:none}}
 @media(min-width:601px) and (max-width:900px){#photo-inquiry{--photo-share:70%}}
 @media(min-width:601px) and (max-width:1100px){.photo-evidence-rail{padding-left:18px;padding-right:15px}.rail-heading img{height:15px}.rail-terms img{height:22px}.rail-reflection img{height:43px}.rail-source img{height:11px}.rail-terms{gap:25px}.evidence-bridge img{height:38px}}
@@ -116,10 +113,7 @@
  .evidence-bridge{left:5%;bottom:44%;max-width:74%}.evidence-bridge img{height:30px}
  #photo-inquiry[data-view=record] .photo-controls{right:4%;bottom:42%}
  #photo-inquiry[data-view=record] .photo-source{bottom:42%}
- #photo-inquiry[data-state=record_question] .photo-prompt-anchor{left:5%;right:5%;bottom:0;height:100px}
- #photo-inquiry[data-prompt=rail-c6] .photo-prompt img{height:43px}
- #photo-inquiry[data-state=record_question] .rail-reflection,#photo-inquiry[data-state=record_question] .rail-source{visibility:hidden}
- #photo-inquiry[data-state=record_question] .rail-terms{display:flex;gap:20px}.photo-lion-memory img{max-width:78vw}
+ #photo-inquiry[data-prompt=rail-c6] .photo-prompt img{height:43px}.photo-lion-memory img{max-width:78vw}
 }
 @media(prefers-reduced-motion:reduce){.photo-evidence-rail{animation:none}.rail-reveal{transition:none}}
 /* The bridge belongs to the shared boundary, not a caption on the photograph. */
@@ -128,21 +122,14 @@
  .evidence-bridge{left:51%;bottom:7%;max-width:44%}.evidence-bridge img{height:33px}
  #photo-inquiry[data-view=record] .photo-evidence::after{content:'';position:absolute;left:0;right:0;bottom:0;height:85px;z-index:4;pointer-events:none;background:linear-gradient(transparent,#171512cf)}
  #photo-inquiry[data-view=record] .photo-source>div{max-height:42vh}
- #photo-inquiry[data-state=record_question] .rail-reflection,#photo-inquiry[data-state=record_question] .rail-source{display:none}
 }
-#photo-inquiry[data-state=record_question] .photo-prompt-anchor{z-index:6}
-@media(max-width:600px){#photo-inquiry[data-state=record_question] .photo-prompt-anchor{bottom:2%;height:115px}}
+
 /* Continuous inquiry uses editorial copy on the existing photographic plane. */
 .photo-editorial{font-size:clamp(21px,2.1vw,32px);line-height:1.7;margin:0;max-width:780px;white-space:pre-line}.photo-prompt small{display:block;font-size:clamp(13px,1.15vw,17px);line-height:1.7;margin-top:12px;max-width:670px;color:#d2c5a5}
-.rail-heading{font-size:clamp(16px,1.45vw,22px);line-height:1.7}.rail-reflection{font-size:clamp(17px,1.5vw,23px);line-height:1.8}
-.photo-question-choices{position:absolute;z-index:8;left:5%;bottom:12%;width:66%;display:flex;flex-direction:column;align-items:flex-start;gap:12px;pointer-events:auto;background:linear-gradient(90deg,#171512a8,transparent)}
-#photo-inquiry .photo-question-choices button{text-align:left;font-size:clamp(17px,1.6vw,24px);line-height:1.6;padding:6px 0;border-bottom:1px solid #b1967050}
-#photo-inquiry[data-state=record_question] .photo-prompt-anchor{bottom:40%;min-height:0}.photo-actions .photo-next{font-size:clamp(17px,1.5vw,22px)}
+.rail-heading{font-size:clamp(16px,1.45vw,22px);line-height:1.7}.rail-reflection{font-size:clamp(17px,1.5vw,23px);line-height:1.8}.photo-actions .photo-next{font-size:clamp(17px,1.5vw,22px)}
 #photo-inquiry[data-state=roof_observation] .photo-prompt-anchor{pointer-events:none}
-@media(max-width:600px){.photo-editorial{font-size:21px}.photo-prompt{max-width:100%}.photo-question-choices{left:5%;width:90%;bottom:10%;gap:8px}.photo-question-choices button{font-size:17px!important}.photo-prompt small{font-size:13px}.rail-heading{font-size:15px}.rail-reflection{font-size:16px;line-height:1.6}#photo-inquiry[data-state=record_question] .photo-evidence-rail{opacity:.22}#photo-inquiry[data-state=record_question] .photo-prompt-anchor{bottom:42%;height:auto}.photo-prompt-anchor{bottom:12%}.photo-actions{gap:8px}}
-.photo-question-choices{background:linear-gradient(90deg,#171512bd,#1715126b 80%,transparent);text-shadow:0 1px 5px #0c0907}
-#photo-inquiry[data-state=record_question] .photo-prompt{background:linear-gradient(90deg,#1715129c,transparent);text-shadow:0 1px 5px #0c0907}
-@media(max-width:600px){#photo-inquiry[data-state=record_question] .photo-prompt-anchor{top:60%;bottom:auto;height:auto}#photo-inquiry[data-state=record_question] .photo-evidence-rail{opacity:0}#photo-inquiry[data-state=record_question] .photo-prompt{background:none}.photo-question-choices{background:none}}
+@media(max-width:600px){.photo-editorial{font-size:21px}.photo-prompt{max-width:100%}.photo-prompt small{font-size:13px}.rail-heading{font-size:15px}.rail-reflection{font-size:16px;line-height:1.6}.photo-prompt-anchor{bottom:12%}.photo-actions{gap:8px}}
+
 /* The longer chronology note must keep its action below the copy on phones. */
 @media(max-width:600px){
  #photo-inquiry:is([data-state=roof_limit],[data-state=roof_model_bridge]) .photo-prompt-anchor{height:auto;bottom:12%;background:linear-gradient(90deg,#171512bd,#17151275 85%,transparent)}
@@ -161,3 +148,14 @@
  #photo-inquiry[data-view=photo] .photo-prompt-anchor{bottom:13%}
  #photo-inquiry[data-view=photo] .photo-editorial{font-size:20px}
 }
+
+/* Use the established raster prompts and positions for the short reflection. */
+#photo-inquiry[data-state=source_judgement] .photo-prompt-anchor{bottom:24%}
+#photo-inquiry[data-state=source_judgement] .photo-judgement{bottom:12%}
+#photo-inquiry[data-prompt=reflection-second] .photo-prompt img{height:56px}
+#photo-inquiry[data-state=record_ready] .photo-prompt-anchor{left:4%;bottom:10%;width:60%;height:auto;min-height:0;z-index:7}
+#photo-inquiry[data-state=record_ready] .photo-navigation-guide{display:none}
+#photo-inquiry[data-state=record_ready] .photo-prompt{display:none}
+@media(max-width:600px){#photo-inquiry[data-state=source_judgement] .photo-prompt-anchor{bottom:31%}#photo-inquiry[data-state=source_judgement] .judgement-options{flex-direction:column;gap:0}#photo-inquiry[data-prompt=reflection-second] .photo-prompt img{height:47px}#photo-inquiry[data-state=record_ready] .photo-prompt-anchor{bottom:1%;width:88%}.evidence-bridge{bottom:10%}}
+
+@media(max-width:600px){#photo-inquiry[data-view=record] .rail-source{top:185px}}

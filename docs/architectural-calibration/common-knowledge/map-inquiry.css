@@ -48,3 +48,12 @@
 .map-score::before{content:'';position:absolute;z-index:-1;inset:-24px -26px;background:radial-gradient(ellipse,#ead7a2fa 25%,#ead7a2d9 48%,transparent 75%)}
 .map-score img{width:auto;max-width:100%;object-fit:contain}.map-score-label{height:18px}.map-score-value strong{font:44px Georgia,serif;font-weight:400;font-variant-numeric:tabular-nums}.map-score-value span{font:16px Georgia,serif;opacity:.7}.map-score-band{height:19px}.map-score-method{height:12px;opacity:.75}
 @media(max-width:600px){.map-score{top:24%;left:5%;right:auto;justify-items:start;gap:6px}.map-score-value strong{font-size:27px}.map-score-label{height:13px}.map-score-band{height:14px}.map-score-method{height:10px}}
+
+/* Reflection stays on the existing board; scoring above is unchanged. */
+.map-inquiry[data-stage=source-limitation] .map-board{opacity:1;visibility:visible;transform:scale(.98);pointer-events:none}
+.map-inquiry[data-stage=source-limitation] .map-confirmed-label{display:none}
+.map-inquiry[data-stage=source-limitation] .map-confirmed-marker{opacity:.65}
+.map-inquiry[data-stage=source-limitation] .map-keeper{filter:drop-shadow(0 0 5px #f4e6c1)}
+.map-inquiry[data-beat=second] #map-keeper-line img{height:clamp(42px,4vw,66px)}
+.map-inquiry[data-stage=source-limitation] .map-dialogue-advance{filter:brightness(.25)}
+@media(max-width:600px){.map-inquiry[data-beat=second] #map-keeper-line img{height:43px}}

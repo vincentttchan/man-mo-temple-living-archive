@@ -1,4 +1,6 @@
-import {look, explore, project, onFrame, setSituation, showThreshold} from './scene.js';
+import {look, explore, project, onFrame, setSituation, showThreshold, setSceneActive} from './scene.js';
+import {loadVisitState,completeRehearsal,selectFieldworkTheme,confirmFieldworkDeparture} from '../common-knowledge/core-onboarding-state.js';
+import {FIELDWORK_THEMES,getFieldworkTheme} from '../common-knowledge/fieldwork-themes.js';
 
 const $ = id => document.getElementById(id);
 let step = 0;
@@ -6,10 +8,16 @@ let markers = [];
 let ritualPhase = null;
 let bellPhase = null;
 let endingFocusTimer;
+let worshipChoice=loadVisitState(sessionStorage,localStorage).worshipChoice;
 const journeySurfaces = [...document.querySelectorAll('body > header, body > main, body > footer')];
 
 function showEnding() {
-  sessionStorage.setItem('manmo-previsit-ritual-complete', 'true');
+  setSceneActive(false);
+  const result=completeRehearsal(sessionStorage,{questionStorage:localStorage,worshipChoice});
+  renderThemes(result.state.selectedFieldworkTheme,location.hash==='#fieldwork-themes'||!getFieldworkTheme(result.state.selectedFieldworkTheme));
+  $('ending-save-status').hidden=result.ok;
+
+
   journeySurfaces.forEach(surface => { surface.inert = true; });
   document.body.classList.add('has-previsit-ending');
   $('previsit-ending').hidden = false;
@@ -17,7 +25,54 @@ function showEnding() {
   endingFocusTimer = setTimeout(() => $('ending-title').focus({preventScroll: true}), delay);
 }
 
+function renderThemes(selected,choosing=!getFieldworkTheme(selected)) {
+  const theme=getFieldworkTheme(selected);
+  $('ending-theme-options').hidden=!choosing;
+  $('ending-theme-preview').hidden=!choosing;
+  $('ending-confirmation').hidden=choosing;
+  $('ending-theme-options').replaceChildren();
+  if(!choosing){
+    $('ending-selected-theme').textContent=`${theme.number}｜${theme.title}`;
+    $('ending-theme-inquiry').textContent=theme.inquiry;
+    return;
+  }
+  $('ending-theme-preview').textContent=theme?.inquiry||'從一個方向開始，讓現場的證據帶你繼續追問。';
+  for(const item of FIELDWORK_THEMES){
+    const button=document.createElement('button');button.type='button';button.textContent=`${item.number}｜${item.title}`;
+    button.classList.toggle('is-current',item.id===selected);
+    const preview=()=>{$('ending-theme-preview').textContent=item.inquiry;};
+    button.onpointerenter=preview;button.onfocus=preview;
+    button.onclick=()=>{
+      const result=selectFieldworkTheme(sessionStorage,item.id);
+      $('ending-save-status').hidden=result.ok;
+      if(!result.ok)return;
+      renderThemes(item.id,false);
+      $('ending-selected-theme').focus({preventScroll:true});
+    };
+    $('ending-theme-options').append(button);
+  }
+}
+$('ending-change-theme').onclick=()=>{
+  renderThemes(loadVisitState(sessionStorage).selectedFieldworkTheme,true);
+  $('ending-theme-options').querySelector('button').focus();
+};
+let departureTimer;
+$('ending-depart').onclick=()=>{
+  const result=confirmFieldworkDeparture(sessionStorage);
+  $('ending-save-status').hidden=result.ok;
+  if(!result.ok)return;
+  $('ending-depart').disabled=true;
+  $('previsit-ending').classList.add('is-leaving');
+  departureTimer=setTimeout(()=>{location.href=new URL('../fieldwork/',location.href).href;},matchMedia('(prefers-reduced-motion: reduce)').matches?0:600);
+};
+window.addEventListener('pageshow',()=>{
+  clearTimeout(departureTimer);
+  $('previsit-ending').classList.remove('is-leaving');
+  $('ending-depart').disabled=false;
+});
+
 function replayJourney() {
+  setSceneActive(true);
   clearTimeout(endingFocusTimer);
   $('previsit-ending').hidden = true;
   document.body.classList.remove('has-previsit-ending');
@@ -135,8 +190,9 @@ function show() {
     look('deities');
     $('caption').textContent = '面向神壇：左為關聖帝君，右為文昌帝君。';
     options([
-      ['我想參拜，練習儀式次序', prayerCandle],
+      ['我想參拜，練習儀式次序', () => {worshipChoice='participate';prayerCandle();}],
       ['我不參拜，在指定位置等候', () => {
+        worshipChoice='observe';
         $('choices').replaceChildren();
         setSituation('wait');
         look('waiting');
@@ -255,6 +311,7 @@ $('back').onclick = () => {
 $('repeat').onclick = () => look(step === 1 || step === 5 ? 'threshold' : step === 2 ? 'bell' : step === 4 && ritualPhase === 'wish' ? 'deities' : step === 3 || step === 4 ? 'courtesy' : 'entry');
 $('restart').onclick = replayJourney;
 $('ending-replay').onclick = replayJourney;
+$('ending-source').onclick=()=>$('sources').showModal();
 $('about').onclick = () => $('sources').showModal();
 $('close-about').onclick = () => $('sources').close();
 onFrame(() => {
@@ -266,5 +323,9 @@ onFrame(() => {
     button.style.visibility = p.visible && p.settled ? 'visible' : 'hidden';
   }
 });
-window.addEventListener('temple-ready', show, {once: true});
-if (document.documentElement.dataset.ready === 'true') show();
+function beginJourney(){
+ const state=loadVisitState(sessionStorage,localStorage);
+ if(state.etiquetteCompleted||state.ritualRehearsalCompleted){step=6;showEnding();}else show();
+}
+window.addEventListener('temple-ready',beginJourney,{once:true});
+if(document.documentElement.dataset.ready==='true')beginJourney();

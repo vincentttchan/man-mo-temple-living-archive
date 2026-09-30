@@ -8,7 +8,7 @@ const prompts={observe:'這座廟，在十九世紀的城市哪裏？','place-ma
 const art=(name,alt='',cls='')=>`<img class="${cls}" src="${ui}text-v2/${name}.png" alt="${alt}" draggable="false">`;
 const button=(action,name,label,cls='')=>`<button type="button" class="map-button ${cls}" data-map-action="${action}" aria-label="${label}">${art(name)}</button>`;
 export function initMapInquiry({onBack=()=>{},storage=localStorage,canOpen=()=>true}={}){
-  let root,surface,state=loadMapInquiryState(storage),storageError=false,beat='first';
+  let root,surface,state=loadMapInquiryState(storage),storageError=false,beat='first',completedRecord=null;
   const timers=new Set();
   const later=(fn,ms)=>{const id=setTimeout(()=>{timers.delete(id);if(!root.hidden)fn();},ms);timers.add(id);return id;};
   const clearTimers=()=>{timers.forEach(clearTimeout);timers.clear();};
@@ -71,7 +71,7 @@ export function initMapInquiry({onBack=()=>{},storage=localStorage,canOpen=()=>t
     root.querySelector('.map-zoom').inert=open;
     root.querySelector('.map-footer').inert=open;
   }
-  function persist(){const result=saveMapInquiryState(storage,state);storageError=!result.ok;if(root)root.querySelector('#map-save-status').textContent=storageError?'未能保存到此瀏覽器。請保留此頁，稍後再試。':'';}
+  function persist(){const result=saveMapInquiryState(storage,completedRecord&&!state.sceneCompleted?completedRecord:state);storageError=!result.ok;if(root)root.querySelector('#map-save-status').textContent=storageError?'未能保存到此瀏覽器。請保留此頁，稍後再試。':'';}
   function go(stage){clearTimers();state=setMapStage(state,stage);persist();render();}
   function render(){
     const stage=state.stage;root.dataset.stage=stage;
@@ -94,7 +94,7 @@ export function initMapInquiry({onBack=()=>{},storage=localStorage,canOpen=()=>t
     requestAnimationFrame(()=>{surface.layout();if(stage==='confirm-location')surface.frameData();});
     if(stage==='source-limitation'){
       root.dataset.beat='retreat';root.querySelector('.map-limitation').hidden=true;
-      later(()=>{surface.setData({marker:null,confirmedLocation:null});surface.fit();root.querySelector('.map-limitation').hidden=false;beat='first';showBeat();},matchMedia('(prefers-reduced-motion: reduce)').matches?30:1600);
+      later(()=>{surface.setData({marker:null,confirmedLocation:MAN_MO_LOCATION});root.querySelector('.map-limitation').hidden=false;beat='first';showBeat();},matchMedia('(prefers-reduced-motion: reduce)').matches?30:1600);
     }
     else{
       root.querySelector('#map-prompt').focus({preventScroll:true});
@@ -105,9 +105,9 @@ export function initMapInquiry({onBack=()=>{},storage=localStorage,canOpen=()=>t
   function showBeat(){
     root.dataset.beat=beat;
     const line=root.querySelector('#map-keeper-line');
-    line.innerHTML=beat==='first'?art('keeper-first','一張地圖，看不到所有事情。'):art('keeper-second','地圖上，看不見人。');
+    line.innerHTML=beat==='first'?art('reflection-first','你現在知道它在哪裏。'):art('reflection-second','但地圖沒有告訴你，誰在這裏生活，又為甚麼需要這座廟。');
     const advance=root.querySelector('[data-map-action="advance"]');
-    advance.setAttribute('aria-label',beat==='first'?'繼續聆聽廟祝':'繼續查看舊照');
+    advance.setAttribute('aria-label',beat==='first'?'繼續聆聽廟祝':'回到修復室');
     advance.focus({preventScroll:true});
     // Dialogue advances intentionally, including for slow readers.
   }
@@ -129,7 +129,7 @@ export function initMapInquiry({onBack=()=>{},storage=localStorage,canOpen=()=>t
       build();clearTimers();if(!storageError)state=loadMapInquiryState(storage);
       // Every entry begins a new observation. Older pins are records, not a new judgement.
       if(state.studentMarker){try{storage.setItem('manmo-map-inquiry-previous-v2',JSON.stringify(state));}catch{/* Active interaction still works without storage. */}}
-      state=createMapInquiryState();delete root.dataset.explored;persist();
+      completedRecord=state.sceneCompleted?structuredClone(state):null;state=createMapInquiryState();delete root.dataset.explored;persist();
       const lion=root.querySelector('.lion-room-presence');if(lion)lion.hidden=document.querySelector('#restoration-root .lion-room-presence')?.hidden!==false;
       modernHint(false);root.hidden=false;root.classList.remove('is-open');render();surface.resetView();surface.retry();
       requestAnimationFrame(()=>requestAnimationFrame(()=>root.classList.add('is-open')));

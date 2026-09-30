@@ -1,73 +1,94 @@
-#threshold-journey{position:fixed;inset:0;z-index:90;overflow:hidden;background:#15110e;color:#e9ddbf;font-family:'Songti TC','Noto Serif TC',serif;--shift:0px}
-#threshold-journey[hidden],#threshold-journey [hidden]{display:none!important}#threshold-journey *,#threshold-journey *:before{box-sizing:border-box}
-.threshold-world{position:absolute;width:max(100vw,177.778vh);height:max(100vh,56.25vw);left:50%;top:50%;transform:translate(-50%,-50%);transform-origin:77% 41%;transition:transform 1.5s cubic-bezier(.22,.6,.3,1)}
+#threshold-journey{position:fixed;inset:0;z-index:90;overflow:hidden;background:#211b15;color:#eee3cf;font-family:'Songti TC','Noto Serif TC',serif;--plaque-yaw:0deg}
+#threshold-journey[hidden],#threshold-journey [hidden]{display:none!important}
+#threshold-journey *{box-sizing:border-box}
+.threshold-world{position:absolute;width:max(100vw,177.778vh);height:max(100vh,56.25vw);left:50%;top:50%;transform:translate(-50%,-50%);transition:filter 1.6s,opacity 1.6s}
 .threshold-environment,.threshold-room-layers{position:absolute;inset:0;width:100%;height:100%}.threshold-environment{object-fit:fill}.threshold-room-layers{pointer-events:none}
-.is-close .threshold-world{transform:translate(-50%,-50%) scale(2.4)}
-.threshold-light{position:absolute;inset:0;background:linear-gradient(0deg,#100d0afa,transparent 72%);pointer-events:none}
-.plaque-study-object{position:absolute;left:64%;top:34%;width:29%;aspect-ratio:3/1;transform:translateX(var(--shift,0px));isolation:isolate;filter:drop-shadow(0 7px 5px #100b09b3)}
-.plaque-study-object img{position:absolute;inset:0;width:100%;height:100%;user-select:none;pointer-events:none;transition:filter 1.7s,opacity 1.7s}
+.is-close .threshold-world{filter:blur(3px) brightness(.42)}
+.threshold-light{position:absolute;inset:0;background:linear-gradient(0deg,#100d0adb,transparent 46%);pointer-events:none}
+.threshold-plaque-study{position:absolute;left:83%;top:7%;width:16%;aspect-ratio:3/1;perspective:1200px;z-index:3;transition:left 1.6s,top 1.6s,width 1.6s,opacity 1.2s;pointer-events:none}
+.is-close .threshold-plaque-study{left:8%;top:21%;width:65%}
+.plaque-study-object{position:relative;width:100%;aspect-ratio:3/1;transform:rotateY(var(--plaque-yaw,0deg));transform-style:preserve-3d;transition:transform .3s;filter:drop-shadow(0 12px 12px #0e090977)}
+.plaque-study-object img{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;transition:filter 1.8s,opacity 1.8s}
 .plaque-master{filter:brightness(.43) saturate(.18) contrast(.8)}.plaque-face,.plaque-inscription{opacity:0}
-.plaque-face{clip-path:inset(23% 7% 23% 7%);filter:brightness(.72) saturate(.55)}.plaque-inscription{clip-path:inset(29% 11% 27% 11%);filter:brightness(.88) saturate(.65)}
-.plaque-study-mount{position:absolute;left:7%;right:7%;bottom:15%;height:5%;background:#3b291c;box-shadow:0 4px 4px #0c0907;transform:translateY(2px);z-index:-1}
-.plaque-study-haze{position:absolute;inset:19% 4% 18%;background:#9b8a671a;pointer-events:none;transition:opacity 1.7s}.plaque-study-light{position:absolute;inset:19% 4% 18%;background:linear-gradient(100deg,transparent 20%,#efd8a710 49%,transparent 75%);transform:translateX(calc(var(--shift,0px)*2));pointer-events:none}
+.plaque-face{clip-path:inset(23% 7% 23% 7%);filter:brightness(.72) saturate(.55)}.plaque-inscription{clip-path:inset(29% 11% 27% 11%);filter:brightness(.9) saturate(.65)}
+.plaque-study-haze{position:absolute;inset:19% 4% 18%;background:#9b8a671a;pointer-events:none;transition:opacity 1.8s}.plaque-study-light{position:absolute;inset:19% 4% 18%;background:linear-gradient(100deg,transparent,#efd8a710,transparent);pointer-events:none}
 [data-readability=inscription]>.plaque-inscription,[data-readability=context]>.plaque-inscription,[data-readability=context]>.plaque-face{opacity:1}
 [data-readability=context]>.plaque-master{filter:brightness(.68) saturate(.6) contrast(.9)}[data-readability=complete]>.plaque-master{filter:none}
 [data-readability=complete]>.plaque-inscription,[data-readability=complete]>.plaque-face,[data-readability=complete]>.plaque-study-haze,[data-readability=complete]>.plaque-study-light{opacity:0}
-.threshold-plaque-target{position:absolute;left:65%;top:37%;width:27%;height:10%;background:transparent!important;border:0!important;cursor:zoom-in;z-index:5}
-.threshold-brand{position:absolute;inset:0;width:100%;height:auto;clip-path:inset(0 85% 80% 0);pointer-events:none}
-#threshold-journey button{color:inherit;font:inherit;letter-spacing:.04em;min-height:44px;cursor:pointer;border:0;background:transparent;padding:10px 0;text-align:left;font-size:clamp(17px,1.5vw,23px)}
-#threshold-journey button:focus-visible,#threshold-journey a:focus-visible{outline:1px solid #e5c98c;outline-offset:6px}
-.threshold-back{position:absolute;right:5%;top:3%;font-size:17px!important}.threshold-copy{position:absolute;left:7%;bottom:11%;width:min(780px,75%);outline:none;text-shadow:0 2px 15px #110e0b}
-.threshold-eyebrow{color:#b99d68;font-size:15px;letter-spacing:.15em;margin:0 0 12px}.threshold-title{font-size:clamp(23px,2.4vw,35px);line-height:1.65;font-weight:400;white-space:pre-line;margin:0 0 16px}
-.threshold-body,.threshold-feedback{font-size:clamp(17px,1.6vw,23px);line-height:1.75;white-space:pre-line}.threshold-body p{margin:6px 0}.threshold-feedback{color:#d4bc88;margin-top:14px}
-.threshold-next{margin-top:16px;border-bottom:1px solid #8c7147!important}.threshold-choices{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:12px}.threshold-choices button{border-bottom:1px solid #65543b!important}
-.threshold-footer{position:absolute;bottom:2%;left:5%;right:5%;display:flex;gap:20px;align-items:center;font-size:12px;color:#b3a48c}.threshold-footer button{font-size:13px!important}.threshold-footer span{margin-left:auto}
-.threshold-sources{max-width:620px;width:90vw;max-height:80vh;overflow:auto;background:#201a13;color:#eadfc5;border:1px solid #746346;padding:28px;font:18px/1.75 'Songti TC',serif}.threshold-sources::backdrop{background:#100c09bb}.threshold-sources a{color:#cfb887}.threshold-sources h2{font-size:24px;font-weight:400}
-.threshold-carried-question{margin-top:25px!important;padding-top:15px;border-top:1px solid #806844;font-size:.85em;color:#c2ac81}
-.archive-plaque-presence{position:absolute;inset:0;pointer-events:none;z-index:4}.archive-previsit-continue{position:absolute;left:7%;bottom:15%;z-index:30;background:transparent;border:0;border-bottom:1px solid #9f8251;color:#e9ddbf;font:clamp(18px,2vw,28px)/1.6 'Songti TC',serif;min-height:48px;padding:10px 0;cursor:pointer;text-shadow:0 2px 15px #000}.archive-previsit-continue[hidden]{display:none}.archive-previsit-continue.is-plaque-target{left:65%;top:37%;bottom:auto;width:27%;height:10%;border:0;cursor:zoom-in}.archive-previsit-continue:focus-visible{outline:1px solid #e0c68b;outline-offset:5px}
-#restoration-root[data-guided-step=free] .archive-previsit-continue{bottom:5%}
-@media(max-width:600px){.threshold-world{width:177.78vh;height:100vh;left:50%;transform:translate(-68%,-50%)}.is-close .threshold-world{transform:translate(-68%,-50%) scale(1.18);transform-origin:77% 34%}.threshold-brand{width:1100px;max-width:none}.threshold-copy{left:6%;width:88%;bottom:11%;max-height:56%;overflow:auto}.threshold-title{font-size:22px;line-height:1.5;margin-bottom:12px}.threshold-body,.threshold-feedback{font-size:17px;line-height:1.65}.threshold-eyebrow{font-size:13px;margin-bottom:9px}.threshold-footer{bottom:1%;gap:8px;font-size:10px}.threshold-footer button{font-size:12px!important}.threshold-next{margin-top:10px}.threshold-choices{gap:1px}.threshold-back{top:2%;font-size:16px!important}.threshold-carried-question{margin-top:15px!important}.threshold-light{background:linear-gradient(0deg,#100d0afa 15%,#100d0a99 50%,transparent 78%)}}
-@media(prefers-reduced-motion:reduce){.threshold-world,.plaque-study-object img,.plaque-study-haze{transition-duration:.1s}.plaque-study-object{transform:none!important}.plaque-study-light{transform:none!important}}
-/* Keep the study in front of the room's local repaint, and center the camera on it. */
-.plaque-study-object{z-index:12}.threshold-plaque-target{z-index:15}.threshold-room-layers{z-index:1}
-.threshold-world{transition:transform 1.5s cubic-bezier(.22,.6,.3,1),top 1.5s;transform-origin:78.5% 40%}
-.is-close .threshold-world{top:35%;transform:translate(-78.5%,-40%) scale(1.9)}
-@media(max-width:600px){.threshold-world{width:1100px;height:618.75px;left:50%;top:28%;transform:translate(-78.5%,-40%) scale(.9);transform-origin:78.5% 40%}.is-close .threshold-world{top:28%;transform:translate(-78.5%,-40%) scale(1.05)}}
-@media(prefers-reduced-motion:reduce){.threshold-world{transition-duration:.1s}}
-.archive-plaque-cue{display:none;position:absolute;left:7%;bottom:10%;margin:0;color:#e9ddbf;font:clamp(17px,1.7vw,27px)/1.85 'Songti TC',serif;text-shadow:0 2px 12px #130d09;letter-spacing:.04em}
+#threshold-journey button{font:inherit;color:inherit;min-height:44px;cursor:pointer;border:0;background:transparent;padding:10px 0;text-align:left;font-size:clamp(16px,1.3vw,21px);line-height:1.65}
+#threshold-journey button:focus-visible,#threshold-journey a:focus-visible{outline:2px solid #e5c98c;outline-offset:5px}
+#threshold-journey .threshold-plaque-target{position:absolute;inset:18% 4%;width:92%;height:64%;pointer-events:auto;cursor:zoom-in}
+.threshold-back{position:absolute;right:4%;top:3%;font-size:14px!important;z-index:5;text-shadow:0 2px 8px #130d09}
+.threshold-copy{position:absolute;z-index:4;left:8%;bottom:11%;width:70%;outline:none;text-shadow:0 2px 12px #110e0b}
+.threshold-eyebrow{font-size:13px;letter-spacing:.13em;color:#cfb88f;margin:0 0 14px}
+.threshold-title{font:400 clamp(23px,2.3vw,36px)/1.65 'Songti TC',serif;margin:0 0 15px;white-space:pre-line;text-wrap:pretty}
+.threshold-body{font-size:clamp(17px,1.6vw,23px);line-height:1.9;white-space:pre-line;min-height:2em}
+.threshold-next{margin-top:18px;border-bottom:1px solid #bda27788!important}
+.threshold-choices{display:grid;gap:6px}.threshold-choices button{border-bottom:1px solid #a5886355!important;width:fit-content}
+.threshold-footer{position:absolute;z-index:5;bottom:2%;left:4%;right:4%;display:flex;align-items:center;justify-content:space-between;gap:16px;color:#c0b398;font-size:11px}.threshold-footer button{font-size:12px!important}
+.plaque-records{position:absolute;left:77%;top:25%;width:19%;z-index:4;border-left:1px solid #b59a6455;padding-left:22px;line-height:1.8;color:#dfceb0}
+.plaque-records button{display:grid;gap:5px;border-bottom:1px solid #a5886355!important;width:100%}.plaque-records span{display:block;font-size:clamp(23px,2.3vw,35px);font-family:Georgia,serif;margin-bottom:8px}.plaque-records small{font-size:13px}.plaque-records p{font-size:clamp(16px,1.4vw,20px);margin:0 0 30px}.plaque-record-credit{display:block;opacity:.65;margin-top:24px}.plaque-records .record-connection{font-size:19px;margin:8px 0;color:#a88f65}
+
+#threshold-journey[data-phase=synthesis] .threshold-copy{bottom:10%;width:80%}
+#threshold-journey[data-phase=synthesis] .threshold-body{min-height:3.8em}
+.threshold-arrival-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 43%;animation:archive-arrive 1.6s ease both}
+#threshold-journey[data-world=exterior] .threshold-world,#threshold-journey[data-world=exterior] .threshold-plaque-study{display:none}
+#threshold-journey[data-world=exterior] .threshold-light{background:none}
+#threshold-journey[data-world=exterior] .threshold-copy{left:5%;bottom:10%;width:88%;display:grid;grid-template-columns:1fr auto;column-gap:35px}
+#threshold-journey[data-world=exterior] .threshold-title{font-size:clamp(23px,2.4vw,36px);grid-column:1}
+#threshold-journey[data-world=exterior] .threshold-eyebrow{grid-column:1/-1;color:#eee3ce}
+#threshold-journey[data-world=exterior] .threshold-body{grid-column:1;font-size:clamp(16px,1.3vw,20px)}
+#threshold-journey[data-world=exterior] .threshold-next{grid-column:2;grid-row:2/4;align-self:end;white-space:nowrap}
+#threshold-journey[data-world=exterior] .threshold-back{background:#171b18b8;padding:5px 12px}
+.threshold-sources{max-width:650px;width:90vw;max-height:80vh;overflow:auto;background:#241e17;color:#eee3cf;border:1px solid #746346;padding:28px;font:17px/1.8 'Songti TC',serif}.threshold-sources::backdrop{background:#100c09bb}.threshold-sources a{color:#e0c18b}.threshold-sources h2{font-size:24px;font-weight:400}
+/* Preserve the existing room's spatial entry hit area, without status badges. */
+.archive-plaque-presence{position:absolute;inset:0;pointer-events:none;z-index:4}.archive-previsit-continue{position:absolute;left:7%;bottom:10%;z-index:30;border:0;border-bottom:1px solid #9f8251;background:transparent;color:#e9ddbf;font:clamp(18px,2vw,28px)/1.6 'Songti TC',serif;min-height:48px;padding:10px 0;cursor:pointer;text-shadow:0 2px 15px #000}.archive-previsit-continue[hidden]{display:none}.archive-previsit-continue.is-plaque-target{left:83%;top:7%;bottom:auto;width:16%;height:16%;border:0;cursor:zoom-in}.archive-previsit-continue:focus-visible{outline:2px solid #e0c68b;outline-offset:5px}
+.archive-plaque-cue{display:none;position:absolute;left:7%;bottom:10%;margin:0;color:#e9ddbf;font:clamp(17px,1.7vw,27px)/1.85 'Songti TC',serif;text-shadow:0 2px 12px #130d09}
 #restoration-root[data-guided-step=plaque] .archive-plaque-cue{display:block}
-#restoration-root[data-guided-step=plaque] .room-evidence-annotations{opacity:.35}
+@keyframes archive-arrive{from{opacity:0;transform:scale(1.025)}to{opacity:1;transform:none}}
+@media(max-width:700px){.threshold-world{width:177.778vh;left:50%}.threshold-plaque-study{left:68%;top:9%;width:28%}.is-close .threshold-plaque-study{left:4%;top:17%;width:92%}.threshold-copy{left:6%;width:88%;bottom:12%;max-height:42%;overflow:auto}.threshold-title{font-size:22px;line-height:1.6}.threshold-body{font-size:17px;line-height:1.75}.threshold-eyebrow{font-size:11px}.plaque-records{left:7%;width:86%;top:36%;display:flex;gap:18px;padding:0 0 0 14px;align-items:start}.plaque-records button{width:auto}.plaque-records span{font-size:24px}.plaque-records p{font-size:15px;margin-bottom:0}.plaque-records small{font-size:12px}.plaque-record-credit{display:none}.plaque-records .record-connection{margin:0;font-size:15px}.threshold-footer{font-size:9px;bottom:1%;gap:12px}.threshold-footer span{max-width:50%;text-align:right}.threshold-back{font-size:13px!important}.threshold-next{margin-top:10px}.threshold-light{background:linear-gradient(0deg,#100d0ae8,transparent 55%)}#threshold-journey[data-phase=synthesis] .threshold-world{width:100vw;height:56.25vw;top:28%;filter:none}#threshold-journey[data-phase=synthesis] .threshold-plaque-study{display:none}#threshold-journey[data-phase=synthesis] .threshold-copy{width:88%;max-height:47%;bottom:10%}#threshold-journey[data-phase=synthesis] .threshold-title{font-size:23px}#threshold-journey[data-world=exterior] .threshold-arrival-art{object-position:51% 40%}#threshold-journey[data-world=exterior] .threshold-copy{display:block;width:88%;bottom:9%;max-height:45%}#threshold-journey[data-world=exterior] .threshold-light{background:none} }
+@media(max-height:560px) and (min-width:701px){.is-close .threshold-plaque-study{top:10%;width:57%}.threshold-copy{bottom:10%;width:72%;max-height:43%;overflow:auto}.threshold-title{font-size:22px;margin-bottom:5px}.threshold-body{font-size:16px}.threshold-next{margin-top:3px}.plaque-records{top:20%}.plaque-records p{margin-bottom:15px}}
+@media(prefers-reduced-motion:reduce){#threshold-journey *,#threshold-journey *::before{animation:none!important;transition:none!important}.plaque-study-object{transform:none!important}}
+/* Once the lens returns, the readable plaque is the one already on the rack. */
+#threshold-journey[data-phase=synthesis] .threshold-plaque-study,#threshold-journey[data-phase=question] .threshold-plaque-study{opacity:0;pointer-events:none}
+@media(max-width:700px){#threshold-journey[data-phase=synthesis]::before{content:'';position:absolute;inset:0;background:linear-gradient(#211b1599,#211b15dd),url('assets/living-archive/opening/archive-room-evidence-v3.png') 63% center/cover;pointer-events:none}}
 
-/* The plaque sits on the new room's upper rack; the rehearsal begins outdoors. */
-.threshold-world>.plaque-study-object{left:83%;top:7%;width:16%;z-index:12}
-.threshold-plaque-target{left:83%;top:7%;width:16%;height:16%;z-index:15}
-.archive-plaque-presence .plaque-study-object{display:none}
-.archive-previsit-continue.is-plaque-target{left:83%;top:7%;width:16%;height:16%}
-/* The close camera follows the plaque's new upper-rack position. */
-#threshold-journey[data-world=room].is-close .threshold-world{left:calc(80vw - max(41vw,72.889vh));top:73%;transform:translate(-50%,-50%) scale(1.9);transform-origin:91% 15%}
-#threshold-journey[data-world=room] .threshold-world>.plaque-study-object{display:none}
-#threshold-journey[data-world=exterior] .threshold-room-layers,#threshold-journey[data-world=exterior] .plaque-study-object,#threshold-journey[data-world=exterior] .threshold-plaque-target{display:none!important}
-#threshold-journey[data-world=exterior] .threshold-world{transform-origin:50% 50%}
-#threshold-journey[data-world=exterior] .threshold-light{background:linear-gradient(90deg,#100c0abc,transparent 55%),linear-gradient(0deg,#100c0ae8,transparent 62%)}
-#threshold-journey[data-world=exterior] .threshold-copy{left:6%;bottom:10%;width:min(740px,80%)}
-#threshold-journey[data-world=exterior] .threshold-eyebrow{color:#dcc695}
-#threshold-journey[data-world=exterior] .threshold-back{background:#1c130cc9;padding:8px 12px}
-@media(max-width:600px){#threshold-journey[data-world=room].is-close .threshold-world{left:calc(75vw - 137px);top:50%;transform:translate(-78.5%,-40%) scale(1.05);transform-origin:91% 15%}#threshold-journey[data-world=exterior] .threshold-world{left:50%;top:50%;transform:translate(-60%,-50%)}#threshold-journey[data-world=exterior] .threshold-copy{width:87%;left:6%;bottom:10%}}
+/* Arrival copy stays over the painted foreground; the next action is rehearsal. */
+#threshold-journey[data-world=exterior] .threshold-copy{bottom:7%;left:5%;width:90%;column-gap:22px}
+#threshold-journey[data-world=exterior] .threshold-title{font-size:clamp(22px,2.1vw,30px);margin-bottom:8px}
+#threshold-journey[data-world=exterior] .threshold-eyebrow{display:none}
+#threshold-journey[data-world=exterior] .threshold-body{font-size:clamp(15px,1.2vw,18px);line-height:1.65}
+#threshold-journey[data-world=exterior] .threshold-copy{text-shadow:0 1px 4px #201a13,0 0 10px #201a1380}
+@media(max-width:700px){#threshold-journey[data-world=exterior] .threshold-arrival-art{height:60svh;object-fit:cover;object-position:50% 40%;mask-image:linear-gradient(#000 92%,transparent)}#threshold-journey[data-world=exterior] .threshold-copy{bottom:10%;left:6%;width:88%;max-height:35%}#threshold-journey[data-world=exterior] .threshold-title{font-size:23px}#threshold-journey[data-world=exterior] .threshold-body{font-size:17px}}
 
-/* A source-focused plaque view; pointer motion shifts the lens across the relief. */
-#threshold-journey[data-world=room].is-close .threshold-environment{transform:translateX(var(--shift));transition:transform .3s ease-out}
-#threshold-journey[data-world=transition]{background:#000}
-#threshold-journey[data-world=transition] :is(.threshold-world,.threshold-brand,.threshold-light,.threshold-footer,.threshold-back){display:none}
-#threshold-journey[data-world=transition] .threshold-copy{left:15%;bottom:35%;width:70%;max-width:none;text-align:center;animation:threshold-intro 1s ease both}
-@keyframes threshold-intro{from{opacity:0}to{opacity:1}}
-
-/* Dedicated 2.5D reading view, visible only after the room plaque is selected. */
-.threshold-plaque-study{display:none;position:absolute;left:12%;top:13%;width:76%;height:38%;perspective:1100px;z-index:3}
-#threshold-journey[data-world=room].is-close .threshold-plaque-study{display:block}
-.threshold-plaque-study .plaque-study-object{left:0;top:0;width:100%;transform:rotateY(var(--plaque-yaw,0deg));transform-style:preserve-3d;transition:transform .25s ease-out;filter:drop-shadow(0 15px 15px #000a)}
-.threshold-plaque-study .plaque-face{transform:translateZ(3px)}
-.threshold-plaque-study .plaque-inscription{transform:translateZ(5px)}
-.threshold-plaque-study .threshold-plaque-target{left:5%;top:15%;width:90%;height:70%;z-index:20}
-#threshold-journey[data-world=room].is-close .threshold-world{left:50%;top:50%;transform:translate(-50%,-50%);filter:blur(5px) brightness(.4)}
-#threshold-journey[data-world=room].is-close .threshold-copy{left:8%;bottom:10%;width:80%;max-width:1000px}
-@media(max-width:600px){.threshold-plaque-study{left:4%;width:92%;top:20%;height:20%}}
+/* Only the pre-visit arrival doorway continues into etiquette. */
+.arrival-camera{position:absolute;inset:0;transform-origin:var(--door-center-x,50%) var(--door-center-y,50%);transition:transform 1.8s cubic-bezier(.22,.55,.3,1)}
+.arrival-door-light{position:absolute;left:0;top:0;object-fit:cover;pointer-events:none;opacity:0;filter:brightness(1.15);transition:opacity .45s}
+#threshold-journey .arrival-door{position:absolute;z-index:2;min-width:44px;min-height:44px;padding:0;background:transparent;border:0;cursor:pointer}
+.arrival-door span{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);white-space:nowrap;font-size:13px;letter-spacing:.06em;color:#eee0c5;opacity:.8;text-shadow:0 2px 6px #20170c}
+#threshold-journey .arrival-door:focus-visible{outline:1px solid #ebd5ab;outline-offset:4px}
+.arrival-camera:has(.arrival-door:hover) .arrival-door-light,.arrival-camera:has(.arrival-door:focus-visible) .arrival-door-light{opacity:1}
+.arrival-door:hover span,.arrival-door:focus-visible span{opacity:1}
+.arrival-dissolve{position:absolute;inset:0;z-index:8;background:#17120e;opacity:0;pointer-events:none;transition:opacity .55s 1.55s}
+#threshold-journey[data-world=exterior] .threshold-copy,#threshold-journey[data-world=exterior] .threshold-back,#threshold-journey[data-world=exterior] .threshold-footer{transition:opacity .5s}
+#threshold-journey.is-entering-door .threshold-copy,#threshold-journey.is-entering-door .threshold-back,#threshold-journey.is-entering-door .threshold-footer,#threshold-journey.is-entering-door .arrival-door span{opacity:0;pointer-events:none}
+.is-entering-door .arrival-camera{transform:scale(1.7)}
+.is-entering-door .threshold-arrival-art{animation:none;filter:brightness(.8);transition:filter 1.5s}
+.is-entering-door .arrival-door-light{opacity:1}
+.is-entering-door .arrival-dissolve{opacity:1}
+@media(prefers-reduced-motion:reduce){#threshold-journey.is-entering-door .arrival-camera{transform:none}#threshold-journey.is-entering-door .arrival-dissolve{transition:opacity .24s!important}}
+/* Writing samples the approved plaque raster, one enlarged character at a time. */
+.plaque-writing{position:absolute;z-index:4;left:50%;top:13%;transform:translateX(-50%);width:min(41svh,420px);max-width:80vw;text-align:center}
+.plaque-writing-canvas{display:block;width:100%;aspect-ratio:1;touch-action:none;cursor:crosshair;outline:none;filter:drop-shadow(0 8px 20px #08060366)}
+.plaque-writing-canvas:focus-visible{outline:1px solid #d9c5a4;outline-offset:5px}
+.plaque-writing-status{font-size:14px;line-height:1.7;min-height:1.7em;margin:15px -20px 4px;color:#d6c3a5}
+.plaque-writing-actions{display:flex;justify-content:space-between;gap:25px}
+#threshold-journey .plaque-writing-actions button{font-size:15px;line-height:1.7;border-bottom:1px solid #c4ac7855;padding:9px 0}
+.plaque-writing-keyboard{position:relative;font-size:12px;line-height:1.7;color:#c5b79d;margin-top:7px}.plaque-writing-keyboard summary{cursor:pointer;width:fit-content;margin:auto;min-height:32px;padding:7px 0}.plaque-writing-keyboard p{position:absolute;top:100%;left:-30%;width:160%;margin:0;padding:12px;background:#241d14;z-index:6}
+#threshold-journey[data-phase=writing] .threshold-plaque-study{visibility:hidden}
+#threshold-journey[data-phase=writing] .threshold-copy{left:8%;bottom:8%;width:84%;pointer-events:none}
+#threshold-journey[data-phase=writing] .threshold-title{font-size:clamp(24px,2.2vw,34px)}
+#threshold-journey[data-phase=writing] .threshold-body{font-size:clamp(16px,1.4vw,21px);line-height:1.65}
+@media(orientation:portrait){.plaque-writing{top:14%;width:min(40svh,74vw)}#threshold-journey[data-phase=writing] .threshold-copy{bottom:10%;max-height:22%}}
+@media(max-width:600px){.plaque-writing{top:13%;width:min(36svh,75vw)}.plaque-writing-status{font-size:13px;margin-top:12px}.plaque-writing-actions{gap:18px}#threshold-journey .plaque-writing-actions button{font-size:14px}#threshold-journey[data-phase=writing] .threshold-title{font-size:23px}#threshold-journey[data-phase=writing] .threshold-body{font-size:16px}}
+@media(max-height:580px) and (orientation:landscape){.plaque-writing{left:66%;top:11%;width:54svh}.plaque-writing-keyboard{display:none}#threshold-journey[data-phase=writing] .threshold-copy{left:7%;bottom:18%;width:38%;max-height:60%;}.plaque-writing-status{margin-top:7px;font-size:12px}#threshold-journey .plaque-writing-actions button{font-size:13px}}

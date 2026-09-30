@@ -1,13 +1,13 @@
 import {loadPhotoState} from './photo-inquiry-state.js';
 import { objectPositionFractions, projectArtworkPoint } from './artwork-layout.js?v=33';
-import {initThresholdJourney} from './threshold-journey.js?v=4';
+import {initThresholdJourney} from './threshold-journey.js?v=20260930plaque-writing';
 import { initRestorationJourney } from './restoration-journey.js?v=11';
 import { initArchitectureStudy } from './architecture-study.js?v=14';
-import { initMapInquiry } from './map-inquiry.js?v=21';
-import { initPhotoInquiry } from './photo-inquiry.js?v=16';
+import { initMapInquiry } from './map-inquiry.js?v=22';
+import { initPhotoInquiry } from './photo-inquiry.js?v=17';
 import {initRoomPresentation} from './room-presentation.js';
 import { rubbingUnlocked, loadRestorationState } from './restoration-state.js';
-import { loadCoreOnboardingState, saveCoreOnboardingState, getGuidedStep, markMapCompleted, markPhotoCompleted, markArchitectureCompleted, advancePrevisit } from './core-onboarding-state.js?v=3';
+import { loadCoreOnboardingState, saveCoreOnboardingState, getGuidedStep, markMapCompleted, markPhotoCompleted, markArchitectureCompleted, advancePrevisit, loadVisitState } from './core-onboarding-state.js?v=4';
 
 const ROOT = '../references/';
 const sources = {
@@ -714,7 +714,7 @@ const coreContext = () => ({
   portraitsComplete: rubbingUnlocked(journey?.getState() || loadRestorationState(sessionStorage)),
 });
 const guidedStep = () => {
-  coreState = loadCoreOnboardingState(sessionStorage, coreContext());
+  coreState = loadVisitState(sessionStorage, localStorage);
   return getGuidedStep({...coreContext(), ...coreState});
 };
 const announceGuidance = () => {
@@ -737,9 +737,8 @@ const mapInquiry = initMapInquiry({
   },
 });
 const photoInquiry = initPhotoInquiry({
-  onOpenArchitecture:()=>architectureStudy.open({fromPhoto:true}),
+  onOpenArchitecture:()=>{if(loadPhotoState(sessionStorage).completed){coreState=markPhotoCompleted(loadVisitState(sessionStorage,localStorage),coreContext());saveCoreOnboardingState(sessionStorage,coreState);}architectureStudy.open({fromPhoto:true});},
   storage: sessionStorage,
-  onQuestion: question => {coreState={...loadCoreOnboardingState(sessionStorage,coreContext()),selectedFieldworkQuestion:question};saveCoreOnboardingState(sessionStorage,coreState);},
   canOpen: () => ['photo','architecture','free'].includes(guidedStep()),
   onBack: ({completed} = {}) => {
     if (completed === true) {
@@ -782,7 +781,7 @@ window.addEventListener('archive-guidance-change',syncPrevisit);
 const architectureStudy=initArchitectureStudy({
   roomRoot: document.getElementById('restoration-root'),
   onReturn:({fromPhoto=false,completed=false}={})=>{if(fromPhoto){photoInquiry.resumeFromArchitecture(completed);return;}journey.showRoom();announceGuidance();},
-  canOpen: ({fromPhoto=false}={}) => (fromPhoto&&guidedStep()==='photo')||['architecture','free'].includes(guidedStep()),
+  canOpen: ({fromPhoto=false}={}) => (fromPhoto&&['photo','architecture'].includes(guidedStep()))||['architecture','free'].includes(guidedStep()),
   onComplete: () => {
     const next = markArchitectureCompleted(coreState || loadCoreOnboardingState(sessionStorage, coreContext()), coreContext());
     saveCoreOnboardingState(sessionStorage, next);

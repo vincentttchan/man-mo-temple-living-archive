@@ -152,8 +152,8 @@ export function initArchitectureStudy({roomRoot,onReturn=()=>{},canOpen=()=>true
     root.hidden=false;roomRoot.inert=true;scene.classList.remove('architecture-focused');delete root.dataset.observed;
     activeRegion=null;delete root.dataset.region;hideDetails();root.querySelector('.architecture-combined').hidden=true;root.querySelector('.architecture-payoff').hidden=true;root.querySelector('.architecture-fieldwork').hidden=true;syncTargets();
     const returnButton=root.querySelector('.architecture-fieldwork-return');
-    returnButton.setAttribute('aria-label',fromPhoto?'回到舊照片':'返回修復室');
-    returnButton.innerHTML=fromPhoto?'回到舊照片 →':imageText('return','返回修復室');
+    returnButton.setAttribute('aria-label','返回修復室');
+    returnButton.innerHTML=imageText('return','返回修復室');
     if(fromPhoto){stage.setAttribute('aria-label','陶塑實物研究；方向鍵稍移視線，加減鍵縮放，Escape 回到舊照片');root.dataset.entry='photo';setPhase('placing_model');stage.focus({preventScroll:true});later(()=>{closeAt=performance.now();setPhase('model_close');later(beginObservation,reduced()?180:1800);},reduced()?180:1200);if(!ready)root.querySelector('.architecture-source').src=ARCHITECTURE_SOURCE.src;return;}
     delete root.dataset.entry;setPhase('room_focus_architecture');stage.focus({preventScroll:true});
     later(()=>{setPhase('approach_architecture');later(()=>{setPhase('placing_model');later(()=>{closeAt=performance.now();setPhase('model_close');later(beginObservation,reduced()?180:2000);},reduced()?180:1600);},reduced()?180:2400);},reduced()?40:100);

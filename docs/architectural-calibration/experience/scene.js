@@ -91,6 +91,8 @@ for(const x of [-.11,.11]){const leg=new THREE.Mesh(new THREE.CylinderGeometry(.
 const waitingSpot=new THREE.Mesh(new THREE.RingGeometry(.30,.34,40),new THREE.MeshBasicMaterial({color:0xc4ad79,transparent:true,opacity:.7,side:THREE.DoubleSide}));waitingSpot.rotation.x=-Math.PI/2;waitingSpot.position.set(2.65,.067,-.2);scene.add(waitingSpot);
 export function setSituation(state){participants.visible=state==='visitor'||state==='wait'||state==='pray';waitingSpot.visible=state==='visitor'||state==='wait';torso.rotation.x=state==='pray'?-.15:0;}
 setSituation('none');
+let sceneActive=true;
+export function setSceneActive(active){sceneActive=active;}
 let moving=null,ready=false;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;orbit.enabled=false;orbit.enableDamping=false;
 export function look(name,animate=true){const v=presets[name];moving={start:performance.now(),duration:animate&&!reduced?1600:0,p:camera.position.clone(),t:orbit.target.clone(),toP:new THREE.Vector3(...v.p),toT:new THREE.Vector3(...v.t),fromFov:camera.fov,fov:v.fov};}
 export function explore(on){orbit.enabled=on;orbit.minDistance=.7;orbit.maxDistance=38;}
@@ -112,4 +114,4 @@ function frameScene(){
 new ResizeObserver(()=>{const{width,height}=host.getBoundingClientRect();if(!width||!height)return;renderer.setSize(width,height);composer.setSize(width,height);ao.setSize(Math.round(width*.75),Math.round(height*.75));fxaa.material.uniforms.resolution.value.set(1/(width*renderer.getPixelRatio()),1/(height*renderer.getPixelRatio()));frameScene();}).observe(host);
 new ResizeObserver(frameScene).observe(guide);
 look('entry',false);
-renderer.setAnimationLoop(time=>{if(moving){const t=moving.duration?Math.min(1,(performance.now()-moving.start)/moving.duration):1,e=t*t*(3-2*t);camera.position.lerpVectors(moving.p,moving.toP,e);orbit.target.lerpVectors(moving.t,moving.toT,e);camera.fov=moving.fromFov+(moving.fov-moving.fromFov)*e;camera.updateProjectionMatrix();if(t===1)moving=null;}orbit.update();atmosphere.update(time);composer.render();frameCallback();if(!ready){ready=true;document.documentElement.dataset.ready='true';document.querySelector('#loading').hidden=true;window.dispatchEvent(new Event('temple-ready'));}});
+renderer.setAnimationLoop(time=>{if(!sceneActive)return;if(moving){const t=moving.duration?Math.min(1,(performance.now()-moving.start)/moving.duration):1,e=t*t*(3-2*t);camera.position.lerpVectors(moving.p,moving.toP,e);orbit.target.lerpVectors(moving.t,moving.toT,e);camera.fov=moving.fromFov+(moving.fov-moving.fromFov)*e;camera.updateProjectionMatrix();if(t===1)moving=null;}orbit.update();atmosphere.update(time);composer.render();frameCallback();if(!ready){ready=true;document.documentElement.dataset.ready='true';document.querySelector('#loading').hidden=true;window.dispatchEvent(new Event('temple-ready'));}});

@@ -42,3 +42,13 @@
 #restoration-root .archive-hit[data-artifact=map]{left:62.5%;top:12%;width:19.5%;height:35%}
 #restoration-root .archive-hit[data-artifact=photo]{left:61.5%;top:47.5%;width:12%;height:17%}
 @media(prefers-reduced-motion:reduce){.room-variant-lion{transition:none}}
+/* Local material changes survive navigation/reload. No completed labels. */
+.room-memory-map,.room-memory-photo,.room-memory-plaque{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;opacity:0;transition:opacity 1.8s;filter:brightness(1.2) saturate(.85)}
+.room-memory-map{clip-path:polygon(63% 22%,81% 10%,81% 43%,63% 46%)}
+.room-memory-photo{clip-path:polygon(65% 48%,74% 47%,72% 64%,63% 64%)}
+.room-memory-plaque{clip-path:polygon(84% 13%,99% 7%,99% 21%,84% 26%);filter:brightness(1.28)}
+.room-local-repaint[data-map-read=true] .room-memory-map,.room-local-repaint[data-photo-read=true] .room-memory-photo,.room-local-repaint[data-plaque-read=true] .room-memory-plaque{opacity:1}
+.room-photo-annotation{position:absolute;left:66%;top:54%;width:5%;height:7%;border-top:1px solid #e8dac466;border-bottom:1px solid #e8dac444;transform:skew(-12deg) rotate(3deg);opacity:0}
+.room-local-repaint[data-photo-read=true] .room-photo-annotation{opacity:.5}
+.archive-scene[data-scene=free-exploration][data-architecture-read=true] .architecture-room-model{filter:brightness(1)!important}
+@media(prefers-reduced-motion:reduce){.room-memory-map,.room-memory-photo,.room-memory-plaque{transition:none}}

@@ -1,15 +1,15 @@
-import {loadPhotoState,savePhotoState,observationComplete} from './photo-inquiry-state.js';
+import {loadPhotoState,savePhotoState,entranceObserved,photoEvidenceComplete} from './photo-inquiry-state.js';
 import {mountRoomLayers} from './room-presentation.js';
 const ASSETS='assets/living-archive/photo-inquiry/';
 const text=(name,alt,cls='')=>`<img class="${cls}" src="${ASSETS}text/${name}.png" alt="${alt}" draggable="false">`;
-export const FIELDWORK_QUESTIONS=['為甚麼街市商人會在文武廟留下石獅？','為甚麼文武廟值理和坊眾會參與義學？','這座廟除了祭祀，還有哪些功能是照片沒有記錄下來的？'];
+export {FIELDWORK_QUESTIONS} from './fieldwork-questions.js';
 const regions=[
  {key:'roof',name:'屋脊',x:.31,y:.18,left:.055,top:.095,width:.465,height:.20},
  {key:'sign',name:'門邊的招牌',x:.375,y:.68,left:.34,top:.62,width:.07,height:.13},
  {key:'lion',name:'廟門左側的石獅',x:.26,y:.60,left:.20,top:.48,width:.13,height:.26},
  {key:'lion',name:'廟門右側的石獅',x:.75,y:.61,left:.69,top:.53,width:.12,height:.20},
 ];
-export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitecture=()=>{},storage=sessionStorage,canOpen=()=>true}={}){
+export function initPhotoInquiry({onBack=()=>{},onOpenArchitecture=()=>{},storage=sessionStorage,canOpen=()=>true}={}){
  for(const name of ['rail-heading','rail-managers','rail-community','rail-school','rail-question','rail-source','rail-bridge','rail-c6','inscription-date','inscription-date-note','inscription-donor','inscription-donor-note','model-prompt','inscription-other','study-return-note','study-unavailable','study-label','study-credit','study-closer','study-observe','study-detail','study-move','study-trace','model-return','year','overview','observe','tap-detail','detail-notice','entrance','sign-canvas','lion-question','back-to-photo','observation-rest','hint-sign','observations-found','observations-limit','judgement-question','judgement-record','judgement-canvas-retry','judgement-canvas-ack','record-year','record-label','record-body','record-context','record-question','record-next','record-bridge','record-open','handoff-one','handoff-two','handoff-evidence']){const image=new Image();image.src=`${ASSETS}text/${name}.png`;image.decode().catch(()=>{});}
  const root=document.createElement('section');root.id='photo-inquiry';root.dataset.revision='three-clues-inscriptions-20260929';root.hidden=true;root.setAttribute('aria-label','觀察文武廟歷史照片');
  root.innerHTML=`<div class="photo-stage" tabindex="-1">
@@ -43,18 +43,18 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
   <div class="evidence-bridge" hidden>${text('rail-bridge','照片裏看不到的人，\n要從其他史料尋找。')}</div>
   <aside class="photo-documentary" aria-live="polite" hidden></aside>
   <div class="photo-judgement" hidden><div class="judgement-options"><button data-answer="photo">${text('judgement-photo','1868 年的照片')}</button><button data-answer="inscription">${text('judgement-record','石獅銘文的文字記錄')}</button></div></div>
-  <div class="photo-question-choices" role="group" aria-label="選一條帶到現場的問題" hidden>${FIELDWORK_QUESTIONS.map((question,index)=>`<button type="button" data-fieldwork-question="${index}">${question}</button>`).join('')}</div><div class="photo-controls"><button data-zoom="-1" aria-label="縮小照片">−</button><button data-zoom="1" aria-label="放大照片">＋</button><button class="photo-fit" aria-label="回看整張照片">↺</button></div>
+  <div class="photo-controls"><button data-zoom="-1" aria-label="縮小照片">−</button><button data-zoom="1" aria-label="放大照片">＋</button><button class="photo-fit" aria-label="回看整張照片">↺</button></div>
   <details class="photo-source"><summary>${text('source','史料來源')}<small>Government Records Service, 01-08-205</small></summary><div><button class="photo-source-close" aria-label="關閉史料來源">關閉 ×</button>
    <p>約 1868 年，荷李活道文武廟。<br>Government Records Service · 01-08-205</p><a href="https://www.grs.gov.hk/ws/hip/en/birth.html" target="_blank" rel="noopener">查看照片出處 ↗</a>
    <p>石座文字依東華三院現存石獅銘文照片核對。請走近研究模型，點選石座上的文字細看；這些字並不能從 1868 年照片讀清。</p><a href="https://rho.tungwah.org.hk/content/media/2022/10/11/IMG_0015.jpg" target="_blank" rel="noopener">立置銘文原照 ↗</a><br><a href="https://rho.tungwah.org.hk/content/media/2022/10/11/IMG_0017.jpg" target="_blank" rel="noopener">送贈銘文原照 ↗</a>
-   <p>石獅實物研究是依現存石獅照片製作的現代美術表現，用於觀察形態與材質；不是 1868 年照片的清晰化版本。模型銘文取自原照，細節仍須到現場核對。</p><a href="https://rho.tungwah.org.hk/tc/built-heritage/2" target="_blank" rel="noopener">東華三院文物介紹 ↗</a>
+   <p>1880 年義學的背景來自東華三院文物介紹：文武廟值理與坊眾支持東華醫院在廟旁中華書院設義學。這是後來的文字記錄，並非照片拍下的活動。</p><p>石獅實物研究是依現存石獅照片製作的現代美術表現，用於觀察形態與材質；不是 1868 年照片的清晰化版本。模型銘文取自原照，細節仍須到現場核對。</p><a href="https://rho.tungwah.org.hk/tc/built-heritage/2" target="_blank" rel="noopener">東華三院文物介紹 ↗</a>
   </div></details><div class="photo-loading" role="status" hidden>正在展開歷史照片…</div>
  </div>`;
  document.body.append(root);mountRoomLayers(root.querySelector('.photo-room-world'));
  const q=s=>root.querySelector(s),surface=q('.photo-surface'),plane=q('.photo-plane'),original=q('.photo-original');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let saved=loadPhotoState(storage),active=false,stage='from_map',scale=1,fitScale=1,zoomLevel=1,tx=0,ty=0;
- let inscriptionToken=0,resumeEvidence=false;
+ let inscriptionToken=0;
  let studyX=0,studyZoom=1,studyGesture=null,studyPoint=null,studyReady=false;
  let activeClue=null,nonLionSelections=0,lionSelected=false,guidanceShown=false,exploredMs=0,lastExplored=0,marks=[];
  const timers=new Set(),pointers=new Map();let gesture=null,pinch=null,promptToken=0;
@@ -64,19 +64,18 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
  function state(value,view='photo'){
   stage=value;root.dataset.state=value;root.dataset.view=view;
   surface.inert=!['photo','record'].includes(view);
-  q('.photo-question-choices').hidden=value!=='record_question';
-  q('.photo-evidence-rail').hidden=view!=='record';q('.evidence-bridge').hidden=view!=='record'||value==='record_question';
+  q('.photo-evidence-rail').hidden=view!=='record';q('.evidence-bridge').hidden=view!=='record';
   if(view!=='record')q('.photo-lion-memory').removeAttribute('style');
   q('.lion-study-layer').inert=value!=='lion_2_5d_study';
   q('.photo-lion-memory').hidden=true;
-  root.querySelectorAll('[data-region]').forEach(b=>b.disabled=value!=='photo_select');
+  root.querySelectorAll('[data-region]').forEach(b=>b.disabled=!(value==='photo_select'&&regions[Number(b.dataset.region)].key!=='roof'||value==='roof_observation'&&regions[Number(b.dataset.region)].key==='roof'));
  }
  function prompt(name,alt,fade=false){
   const token=++promptToken,el=q('.photo-prompt');
   const update=()=>{if(token!==promptToken)return;el.innerHTML=text(name,alt);el.classList.remove('is-changing');root.dataset.prompt=name;};
   if(fade&&!reduced){el.classList.add('is-changing');later(update,180);}else update();
  }
- function hideCopy(){q('.photo-question-choices').hidden=true;for(const s of ['.photo-detail-return','.photo-next','.photo-documentary','.photo-judgement','.lion-study-return','.lion-inscription-note'])q(s).hidden=true;}
+ function hideCopy(){for(const s of ['.photo-detail-return','.photo-next','.photo-documentary','.photo-judgement','.lion-study-return','.lion-inscription-note'])q(s).hidden=true;}
  function next(name,alt){const b=q('.photo-next');b.innerHTML=text(name,alt);b.setAttribute('aria-label',alt.replace(/\s*→$/,''));b.hidden=false;}
  const ratio=1378/1000;
  const surfaceRatio=()=>surface.clientHeight/((surface.clientWidth||1)/ratio);
@@ -110,7 +109,7 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
   root.dataset.explored='true';if(exploredMs>=10000)guideLion();
  }
  function selectClue(clue,x,y){
-  if(stage!=='photo_select'||!['sign','lion','roof'].includes(clue))return;
+  if(!['photo_select','roof_observation'].includes(stage)||!['sign','lion','roof'].includes(clue)||clue==='roof'&&!photoEvidenceComplete(saved))return;
   clearTimers();hideCopy();activeClue=clue;root.dataset.explored='true';mark(x,y,clue);
   if(clue==='lion'){lionSelected=true;saved.lionRevealed=true;persist();}else nonLionSelections++;
   focus(x,y,clue==='sign'?2.6:clue==='lion'?2.15:2.1);state(`${clue}_focus`);prompt('detail-notice','你在這裏注意到甚麼？');
@@ -121,7 +120,7 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
     state(`${clue}_read`);
     // Only these approved regions carry existing source-supported copy.
     if(clue==='sign')prompt('sign-canvas','字樣似是「卜命」。\n是誰掛出這塊招牌？');
-    if(clue==='roof'){saved.roofRidgeDiscovered=true;persist();state('roof_introduction');nativePrompt('屋脊上，也藏着人物與故事。','照片裏看不清的細節，我們借一件現存陶塑的研究模型，走近看看。');nextNative('走近陶塑，細看形態 →');return;}
+    if(clue==='roof'){saved.roofRidgeDiscovered=true;persist();state('roof_introduction');nativePrompt('屋脊上，也藏着人物與故事。','借現存、帶有 1893 年款的陶塑走近看看；它不能證明 1868 年照片中的屋脊已有相同面貌。');nextNative('走近陶塑，細看形態 →');return;}
     if(nonLionSelections>=2)later(guideLion,3500);
    }
    q('.photo-detail-return').hidden=clue==='lion';
@@ -202,7 +201,8 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
    persist();
   }
   clearTimers();hideCopy();resetPhoto();activeClue=null;
-  if(observationComplete(saved)){state('observation_summary');nativePrompt('照片留下了物件，卻沒有把它們的故事一起留下。');nextNative('收起照片，繼續看看 →');}
+  if(saved.completed&&photoEvidenceComplete(saved)){roofBridge();}
+  else if(entranceObserved(saved)){if(!saved.judgement)sourceJudgement();else if(!saved.recordSeen)record();else photoPayoff();}
   else{
    state('photo_select');
    const missing=!saved.clues.sign&&saved.clues.lion?'sign':null;
@@ -211,7 +211,7 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
   }
  }
  function record(){
-  clearTimers();hideCopy();state('record_bridge');resetPhoto();nativePrompt('照片只留下了一個瞬間。');later(()=>{nativePrompt('但這裏還發生過甚麼？');later(revealRecord,1900);},1800);
+  clearTimers();hideCopy();state('record_bridge');resetPhoto();prompt('record-bridge','還有一些人，\n要從文字記載中尋找。');later(revealRecord,2200);
  }
  function revealRecord(){
   clearTimers();hideCopy();state('record_1880','record');root.dataset.railBeat='0';
@@ -220,35 +220,34 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
   // Same image and surface. Only their available width changes to make room for text.
   const reveal=beat=>{root.dataset.railBeat=String(beat);const el=q(`[data-rail="${beat}"]`);el.classList.add('is-revealed');el.removeAttribute('aria-hidden');};
   [700,1400,2100,2800,4600,7500].forEach((ms,i)=>later(()=>reveal(i+1),ms));
-  later(()=>{saved.recordSeen=true;persist();showQuestions();},12000);
+  later(()=>{saved.recordSeen=true;persist();state('record_ready','record');next('record-next','繼續看看 →');},12000);
  }
  function nativePrompt(copy,source=''){promptToken++;q('.photo-prompt').replaceChildren();const line=document.createElement('p');line.className='photo-editorial';line.textContent=copy;q('.photo-prompt').append(line);if(source){const note=document.createElement('small');note.textContent=source;q('.photo-prompt').append(note);}root.dataset.prompt='editorial';}
  function nextNative(label){const b=q('.photo-next');b.textContent=label;b.setAttribute('aria-label',label.replace(/\s*→$/,''));b.hidden=false;}
- function showQuestions(){
-  clearTimers();hideCopy();state('record_question','record');nativePrompt('這些線索放在一起，你最想追問甚麼？');
-  root.dataset.railBeat='6';q('.photo-evidence-rail').querySelectorAll('[data-rail]').forEach(el=>{el.classList.add('is-revealed');el.removeAttribute('aria-hidden');});
-  // The choices already exist in the DOM. Entering this state exposes them in one
-  // operation, rather than depending on a later reveal timer or image load.
-  q('.photo-question-choices').hidden=false;
+ function sourceJudgement(){
+  hideCopy();state('source_judgement');resetPhoto();prompt('judgement-question','石獅是照片讓你看見的；\n送贈者，你是從哪裏讀到的？');q('.photo-judgement').hidden=false;
+  q('[data-answer=photo]').focus({preventScroll:true});
  }
- q('.photo-question-choices').addEventListener('click',event=>{
-  const button=event.target.closest('[data-fieldwork-question]');if(stage!=='record_question'||!button)return;
-  const question=FIELDWORK_QUESTIONS[Number(button.dataset.fieldworkQuestion)];if(!question)return;
-  saved.selectedFieldworkQuestion=question;persist();onQuestion(question);roofBridge();
- });
- function roofBridge(){clearTimers();hideCopy();state('roof_bridge');resetPhoto();nativePrompt('門前留下了一些線索。');later(()=>{state('roof_observation');nativePrompt('如果把視線再抬高一點呢？');surface.focus({preventScroll:true});},2000);}
+ function photoPayoff(){
+  clearTimers();hideCopy();state('observation_summary');resetPhoto();
+  prompt('reflection-first','照片留下了一些痕跡。');
+  later(()=>{prompt('reflection-second','但有些故事，\n要靠其他史料才能讀出來。',true);next('look-up','抬頭看看 →');},2200);
+ }
+ function roofBridge(){
+  clearTimers();hideCopy();state('roof_bridge');resetPhoto();prompt('entrance-traces','門前留下了一些線索。');
+  later(()=>{state('roof_observation');prompt('look-higher','如果把視線再抬高一點呢？');surface.focus({preventScroll:true});},2000);
+ }
+
  function hide(){if(!active||!saved.completed)return;clearTimers();persist();active=false;root.hidden=true;onBack({completed:true,fromRoof:true});}
  q('.photo-detail-return').addEventListener('click',()=>backToPhoto(true));
  q('.photo-next').addEventListener('click',()=>{
   if(stage==='roof_introduction'){clearTimers();hideCopy();active=false;root.hidden=true;onOpenArchitecture();return;}
-  if(stage==='observation_summary'){saved.completed=true;persist();hide();return;}
-  if(stage==='observation_limit'){hideCopy();state('source_judgement');prompt('judgement-question','石獅是照片讓你看見的；\n送贈者，你是從哪裏讀到的？');q('.photo-judgement').hidden=false;return;}
+  if(stage==='record_ready'){photoPayoff();return;}
+  if(stage==='observation_summary'&&photoEvidenceComplete(saved)){saved.completed=true;persist();roofBridge();return;}
   if(stage==='source_ack'){record();return;}
-  if(stage==='roof_limit'){state('roof_model_bridge');nativePrompt('接下來細看的，是現存、帶有 1893 年款的「吹簫引鳳」。','1868 年照片不能證明這件後來的陶塑當時已有相同面貌。');nextNative('細看陶塑的形態 →');return;}
-  if(stage==='roof_model_bridge'&&saved.recordSeen&&saved.selectedFieldworkQuestion&&saved.roofRidgeDiscovered){saved.completed=true;persist();hide();}
  });
  root.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{
-  if(stage!=='source_judgement'||!observationComplete(saved))return;
+  if(stage!=='source_judgement'||!entranceObserved(saved))return;
   if(b.dataset.answer!=='inscription'){prompt('judgement-canvas-retry','照片看得見石獅，卻讀不清座上的字。\n送贈者的名字，是由哪一種史料補上的？');return;}
   saved.judgement=true;persist();hideCopy();state('source_ack');prompt('judgement-canvas-ack','照片讓你發現石獅；\n銘文的文字記錄，補上了送贈者。');later(record,3200);
  }));
@@ -278,12 +277,12 @@ export function initPhotoInquiry({onBack=()=>{},onQuestion=()=>{},onOpenArchitec
   try{await original.decode();}catch{q('.photo-loading').hidden=false;q('.photo-loading').innerHTML='照片未能載入。<button type="button">重新載入</button>';return;}
   if(!active)return;q('.photo-loading').hidden=true;state('photo_overview');resetPhoto();prompt('overview','先看整張照片。');surface.focus({preventScroll:true});
   later(()=>{state('photo_question');fit(true);prompt('observe','如果不只看這座廟，\n你還注意到甚麼？',true);
-   later(()=>{if(observationComplete(saved)){backToPhoto();}else{state('photo_select');prompt('tap-detail','點出門口招牌、石獅或屋脊，看看各自留下甚麼線索。',true);}},2200);
+   later(()=>{if(entranceObserved(saved)||saved.completed){backToPhoto();}else{state('photo_select');prompt('tap-detail','點出門口招牌、石獅或屋脊，看看各自留下甚麼線索。',true);}},2200);
   },2200);
  }
  q('.photo-loading').addEventListener('click',()=>{if(stage==='lion_study_invitation'){q('.photo-loading').hidden=true;enterStudy();}else{original.src=original.src;beginObservation();}});
  return {
-  resumeFromArchitecture(completed=false){active=true;root.hidden=false;if(completed){saved.architectureStudyCompleted=true;saved.clues.roof=true;}persist();backToPhoto();},
+  resumeFromArchitecture(completed=false){active=true;root.hidden=false;if(completed){saved.architectureStudyCompleted=true;saved.clues.roof=true;persist();hide();}else{persist();roofBridge();}},
   show(){if(!canOpen())return;studyUI(false);clearTimers();hideCopy();active=true;root.hidden=false;saved=loadPhotoState(storage);nonLionSelections=0;lionSelected=saved.clues.lion;guidanceShown=false;exploredMs=lastExplored=0;delete root.dataset.explored;zoomLevel=1;scale=fitScale=1;tx=ty=0;
    try{marks=JSON.parse(storage.getItem('manmo-photo-observations-v1')||'[]').filter(p=>['sign','lion','roof'].includes(p.clue)&&Number.isFinite(p.x+p.y)&&p.x>=0&&p.x<=1&&p.y>=0&&p.y<=1).slice(-12);}catch{marks=[];}drawMarks();state('from_map','room');fit();q('.photo-stage').focus({preventScroll:true});
    requestAnimationFrame(()=>{if(!active)return;state('approach_photo','entering');later(beginObservation,reduced?80:1100);});

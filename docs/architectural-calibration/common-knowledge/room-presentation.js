@@ -1,13 +1,18 @@
 import {loadPhotoState} from './photo-inquiry-state.js';
+import {loadVisitState} from './core-onboarding-state.js';
 const base='assets/living-archive/room-correction/';
 const sceneBase='assets/living-archive/opening/';
 export function mountRoomLayers(host){
   if(!host||host.querySelector(':scope > .room-local-repaint'))return;
   const layer=document.createElement('div');layer.className='room-local-repaint';layer.setAttribute('aria-hidden','true');
-  layer.innerHTML=`<img class="room-variant-lion" src="${sceneBase}archive-room-lion-revealed-v3.png" alt="" draggable="false"><div class="room-evidence-light"></div>`;
+  layer.innerHTML=`<img class="room-variant-lion" src="${sceneBase}archive-room-lion-revealed-v3.png" alt="" draggable="false"><div class="room-evidence-light"></div><img class="room-memory-map" src="${sceneBase}archive-room-evidence-v3.png" alt=""><img class="room-memory-photo" src="${sceneBase}archive-room-evidence-v3.png" alt=""><img class="room-memory-plaque" src="${sceneBase}archive-room-evidence-v3.png" alt=""><span class="room-photo-annotation"></span>`;
   host.append(layer);
-  const sync=()=>{layer.dataset.lionRevealed=String(loadPhotoState(sessionStorage).lionRevealed===true);};
-  window.addEventListener('archive-evidence-change',sync);sync();
+  const sync=()=>{
+    const state=loadVisitState(sessionStorage,localStorage);
+    layer.dataset.lionRevealed=String(loadPhotoState(sessionStorage).lionRevealed===true);
+    for(const [name,key] of [['map','mapCertified'],['photo','photoCompleted'],['architecture','architectureCompleted'],['plaque','plaqueCompleted']])layer.dataset[name+'Read']=String(state[key]===true);
+  };
+  window.addEventListener('archive-evidence-change',sync);window.addEventListener('archive-guidance-change',sync);sync();
 }
 export function initRoomPresentation(root){
   const scene=root.querySelector('[data-scene="free-exploration"]');mountRoomLayers(scene);
@@ -17,9 +22,11 @@ export function initRoomPresentation(root){
   function update(){
     const step=root.dataset.guidedStep;
     const done={map:['photo','architecture','plaque','etiquette','handoff','free'].includes(step),photo:['architecture','plaque','etiquette','handoff','free'].includes(step),architecture:['plaque','etiquette','handoff','free'].includes(step)};
+    scene.dataset.architectureRead=String(done.architecture);
+    if(done.architecture)for(const key of ['figureReadable','phoenixReadable','patternReadable','baseReadable','fullReadable'])scene.dataset[key]='true';
     for(const key of ['map','photo','architecture']){
       const image=annotations.querySelector(`[data-room-label=${key}]`),active=step===key;
-      image.hidden=(!active&&!done[key])||(active&&['map','photo'].includes(key)&&root.dataset.guidanceReady!=='true');image.dataset.active=String(active);
+      image.hidden=!active||(active&&['map','photo'].includes(key)&&root.dataset.guidanceReady!=='true');image.dataset.active=String(active);
       image.src=`${base}${key}-${done[key]?'done':'pending'}.png`;
       image.alt={map:'上環舊地圖',photo:'1868 年舊照',architecture:'建築研究模型'}[key]+'，'+(done[key]?{map:'位置已確認',photo:'線索已整理',architecture:'建築證據已讀'}[key]:{map:'等待定位',photo:'等待細看',architecture:'等待觀察'}[key]);
     }
